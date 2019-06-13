@@ -1,0 +1,14 @@
+---
+- name: set limit for unstable packages
+  copy:
+    dest: /etc/apt/preferences.d/limit-unstable
+    src: files/limit-unstable
+
+- name: add wireguard repository
+  apt_repository:
+    repo: deb http://deb.debian.org/debian/ unstable main
+    filename: unstable-wireguard
+
+- name: install wireguard toolkit
+  apt:
+    name: wireguard

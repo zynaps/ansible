@@ -1,0 +1,7 @@
+---
+- name: setup wireguard vpn
+  hosts: all
+  become: yes
+
+  roles:
+    - wireguard
