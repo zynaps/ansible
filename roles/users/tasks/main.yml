@@ -1,0 +1,24 @@
+---
+  - name: add regular user
+    user:
+      name: igor
+      comment: Igor Vinokurov
+      uid: 1000
+      groups: sudo
+      append: yes
+      shell: /bin/zsh
+      state: present
+
+  - name: auth key for regular user
+    authorized_key:
+      user: igor
+      key: "{{ lookup('file', 'files/authorized_keys/igor') }}"
+      state: present
+
+  - name: passwordless sudo for sudo group
+    copy:
+      dest: /etc/sudoers.d/99-sudo-nopasswd
+      src: files/99-sudo-nopasswd
+      owner: root
+      group: root
+      mode: 0440

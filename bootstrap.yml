@@ -1,0 +1,8 @@
+---
+- name: bootstrap host
+  hosts: all
+  user: root
+
+  roles:
+    - common_packages
+    - users

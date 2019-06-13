@@ -1,0 +1,16 @@
+---
+- name: install user packages
+  apt:
+    name: [
+      'curl',
+      'dnsutils',
+      'git',
+      'iperf3',
+      'rsync',
+      'socat',
+      'tcpdump',
+      'tmux',
+      'vim',
+      'whois',
+      'zsh'
+    ]
