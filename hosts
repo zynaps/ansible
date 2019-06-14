@@ -1,2 +1,5 @@
 [all]
 darwin
+
+[wireguards]
+darwin

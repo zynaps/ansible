@@ -1,6 +1,6 @@
 ---
-- name: setup wireguard vpn
-  hosts: all
+- name: setup wireguard network
+  hosts: darwin
   become: yes
 
   roles:

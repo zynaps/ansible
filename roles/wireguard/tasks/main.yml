@@ -12,3 +12,23 @@
 - name: install wireguard toolkit
   apt:
     name: wireguard
+
+- name: add wireguard interface
+  template:
+    dest: /etc/network/interfaces.d/wg0.conf
+    src: templates/wg0_interface.j2
+
+- name: make wireguard config directory
+  file:
+    path: /etc/wireguard
+    state: directory
+    mode: 0700
+
+- name: add wireguard config
+  template:
+    dest: /etc/wireguard/wg0.conf
+    src: templates/wg0_config.j2
+    mode: 0600
+
+- name: restart wireguard interface
+  shell: "ifdown wg0 && ifup wg0"
