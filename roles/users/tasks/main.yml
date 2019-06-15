@@ -18,7 +18,7 @@
   - name: passwordless sudo for sudo group
     copy:
       dest: /etc/sudoers.d/99-sudo-nopasswd
-      src: files/99-sudo-nopasswd
+      content: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n"
       owner: root
       group: root
       mode: 0440
