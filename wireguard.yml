@@ -1,6 +1,6 @@
 ---
 - name: setup wireguard network
-  hosts: darwin
+  hosts: wireguards
   become: yes
 
   roles:

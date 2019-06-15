@@ -6,3 +6,13 @@ garden
 
 [wireguards]
 darwin
+dexter
+escape
+garden
+
+[wireguard_users]
+shogun
+
+[wireguard_peers:children]
+wireguards
+wireguard_users

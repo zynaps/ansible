@@ -1,3 +1,13 @@
 [Interface]
 PrivateKey = {{ wireguard.private_key }}
 ListenPort = 51820
+
+{% for host in groups.wireguard_peers %}
+{% if host != inventory_hostname %}
+[Peer] # {{ host }}
+PublicKey = {{ hostvars[host].wireguard.public_key }}
+AllowedIPs = {{ hostvars[host].wireguard.ip }}
+Endpoint = {{ hostvars[host].wireguard.endpoint }}
+
+{% endif %}
+{% endfor %}
