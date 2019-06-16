@@ -1,4 +1,10 @@
 ---
+- name: install system packages
+  apt:
+    name: [
+      'iptables-persistent'
+    ]
+
 - name: install user packages
   apt:
     name: [
