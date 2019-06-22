@@ -29,6 +29,7 @@
     dest: /etc/wireguard/wg0.conf
     src: templates/wg0_config.j2
     mode: 0600
+  no_log: true
 
 - name: add boot-time iptables rules loader
   apt:
