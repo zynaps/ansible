@@ -30,6 +30,7 @@
     src: templates/wg0_config.j2
     mode: 0600
   no_log: true
+  notify: restart wireguard interface
 
 - name: add boot-time iptables rules loader
   apt:
@@ -61,8 +62,3 @@
     sysctl_file: /etc/sysctl.d/90-ip_forward.conf
     sysctl_set: yes
   when: wireguard.exit_node is defined and wireguard.exit_node
-
-- name: restart wireguard interface
-  shell: |
-    ifquery wg0 && ifdown --force --ignore-errors wg0 && sleep 1
-    ifup --force --ignore-errors wg0

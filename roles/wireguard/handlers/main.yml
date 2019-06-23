@@ -1,0 +1,5 @@
+---
+- name: restart wireguard interface
+  shell: |
+    ifquery wg0 && ifdown --force --ignore-errors wg0 && sleep 1
+    ifup --force --ignore-errors wg0
