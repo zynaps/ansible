@@ -1,0 +1,16 @@
+---
+- name: install python
+  hosts: all
+  gather_facts: no
+  user: root
+
+  tasks:
+    - name: check for python
+      raw: test -e /usr/bin/python
+      changed_when: false
+      failed_when: false
+      register: check_python
+
+    - name: install python
+      raw: apt install -y python-minimal
+      when: check_python.rc != 0
