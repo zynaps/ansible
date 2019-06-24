@@ -1,0 +1,51 @@
+---
+- name: add docker install prerequisites
+  apt:
+    name: [
+      'apt-transport-https',
+      'software-properties-common',
+    ]
+
+- name: add docker GPG key
+  apt_key:
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    url: "https://download.docker.com/linux/debian/gpg"
+
+- name: add docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ansible_distribution_release}} stable
+
+- name: add docker-ce
+  apt:
+    name: docker-ce
+
+- name: add docker runtime prerequisites
+  pip:
+    name:
+      'docker'
+
+- name: add base docker config
+  copy:
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-file": "3",
+          "max-size": "32m"
+        }
+      }
+    dest: /etc/docker/daemon.json
+    mode: 0600
+  notify: restart docker
+
+- name: enable and start docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: add regular user to docker group
+  user:
+    name: igor
+    groups: docker
+    append: yes

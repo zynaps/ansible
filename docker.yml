@@ -1,0 +1,7 @@
+---
+- name: bootstrap docker
+  hosts: dockers
+  become: yes
+
+  roles:
+    - docker

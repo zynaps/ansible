@@ -4,6 +4,12 @@ dexter
 escape
 garden
 
+[dockers]
+darwin
+dexter
+escape
+garden
+
 [wireguards]
 darwin
 dexter
