@@ -4,6 +4,12 @@ dexter
 escape
 garden
 
+[docker]
+darwin
+dexter
+escape
+garden
+
 [wireguards]
 darwin
 dexter

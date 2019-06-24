@@ -1,10 +1,7 @@
 ---
-- name: install python addons
+- name: install python pip
   apt:
-    name: [
-      'python-apt',
-      'python-pip'
-    ]
+    name: python-pip
 
 - name: install user packages
   apt:
