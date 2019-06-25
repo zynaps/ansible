@@ -4,5 +4,5 @@
   user: root
 
   roles:
-    - common_packages
+    - user_packages
     - users
