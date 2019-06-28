@@ -1,6 +1,6 @@
 auto wg0
 iface wg0 inet static
-        address {{ wireguard.ip }}
+        address {{ wireguard.ip + '/32' }}
         netmask 255.255.255.0
         pre-up ip link add $IFACE type wireguard
         pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf

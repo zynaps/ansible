@@ -6,7 +6,7 @@ ListenPort = 51820
 {% if host != inventory_hostname %}
 [Peer] # {{ host }}
 PublicKey = {{ hostvars[host].wireguard.public_key }}
-AllowedIPs = {{ hostvars[host].wireguard.ip }}
+AllowedIPs = {{ hostvars[host].wireguard.ip + '/32' }}
 Endpoint = {{ hostvars[host].wireguard.endpoint }}
 
 {% endif %}
