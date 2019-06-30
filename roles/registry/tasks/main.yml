@@ -1,0 +1,8 @@
+---
+- name: start docker registry
+  docker_container:
+    name: registry
+    image: registry
+    restart_policy: unless-stopped
+    ports:
+      - "{{ wireguard.ip + ':5000:5000/tcp' }}"

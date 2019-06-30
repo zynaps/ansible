@@ -28,6 +28,7 @@
   copy:
     content: |
       {
+        "insecure-registries": ["{{ docker.local_registry }}"],
         "log-driver": "json-file",
         "log-opts": {
           "max-file": "3",
