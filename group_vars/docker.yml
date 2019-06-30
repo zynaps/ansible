@@ -1,0 +1,3 @@
+---
+docker:
+  local_registry: "{{ hostvars['escape'].wireguard.ip + ':5000' }}"
