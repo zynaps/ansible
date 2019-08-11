@@ -1,0 +1,31 @@
+---
+- name: clone feeder
+  git:
+    repo: https://github.com/zynaps/feeder.git
+    dest: "{{ ansible_env.HOME + '/' + 'feeder' }}"
+  delegate_to: garden
+
+- name: build and push feeder container
+  docker_image:
+    build:
+      path: "{{ ansible_env.HOME + '/' + 'feeder' }}"
+    name: "{{ docker.local_registry + '/' + 'feeder' }}"
+    push: yes
+    source: build
+  delegate_to: garden
+
+- name: start feeder container
+  docker_container:
+    name: feeder
+    image: "{{ docker.local_registry + '/' + 'feeder' }}"
+    restart_policy: unless-stopped
+    ports:
+      - "{{ wireguard.ip + ':4567:4567/tcp' }}"
+    env:
+      REDIS_URL: "{{ 'redis://' + hostvars['escape'].wireguard.ip + ':6379' }}"
+
+- name: add nginx config
+  template:
+    dest: /srv/nginx/sites.d/feeder.conf
+    src: templates/nginx.conf.j2
+  notify: nginx reload
