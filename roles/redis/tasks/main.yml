@@ -1,0 +1,16 @@
+---
+- name: create redis storage
+  file:
+    path: /srv/redis/data
+    state: directory
+
+- name: start redis container
+  docker_container:
+    name: redis
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    restart_policy: unless-stopped
+    ports:
+      - "{{ wireguard.ip + ':6379:6379/tcp' }}"
+    volumes:
+      - "/srv/redis/data:/data"
