@@ -1,0 +1,25 @@
+---
+- name: clone nginx
+  git:
+    repo: https://github.com/zynaps/nginx.git
+    dest: "{{ ansible_env.HOME + '/' + 'nginx' }}"
+  delegate_to: garden
+
+- name: build and push nginx container
+  docker_image:
+    build:
+      path: "{{ ansible_env.HOME + '/' + 'nginx' }}"
+    name: "{{ docker.local_registry + '/' + 'nginx' }}"
+    push: yes
+    source: build
+  delegate_to: garden
+
+- name: start nginx container
+  docker_container:
+    name: nginx
+    image: "{{ docker.local_registry + '/' + 'nginx' }}"
+    restart_policy: unless-stopped
+    ports:
+      - "80:80/tcp"
+    volumes:
+      - "/srv/nginx/sites.d:/etc/nginx/sites.d"
