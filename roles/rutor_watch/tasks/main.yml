@@ -1,0 +1,23 @@
+---
+- name: clone rutor_watch
+  git:
+    repo: https://github.com/zynaps/rutor_watch.git
+    dest: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
+  delegate_to: garden
+
+- name: build and push rutor_watch container
+  docker_image:
+    build:
+      path: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
+    name: "{{ docker.local_registry + '/' + 'rutor_watch' }}"
+    push: yes
+    source: build
+  delegate_to: garden
+
+- name: start rutor_watch container
+  docker_container:
+    name: rutor_watch
+    image: "{{ docker.local_registry + '/' + 'rutor_watch' }}"
+    restart_policy: unless-stopped
+    env:
+      REDIS_URL: "{{ 'redis://' + hostvars['escape'].wireguard.ip + ':6379' }}"
