@@ -1,0 +1,4 @@
+---
+- name: update postfix config
+  shell: docker exec postfix /etc/postfix/local_config/update_config.sh
+  delegate_to: escape

@@ -1,0 +1,39 @@
+---
+- name: clone postfix
+  git:
+    repo: https://github.com/zynaps/postfix.git
+    dest: "{{ ansible_env.HOME + '/' + 'postfix' }}"
+  delegate_to: garden
+
+- name: build and push postfix container
+  docker_image:
+    build:
+      path: "{{ ansible_env.HOME + '/' + 'postfix' }}"
+      pull: yes
+    name: "{{ docker.local_registry + '/' + 'postfix' }}"
+    push: yes
+    source: build
+  delegate_to: garden
+
+- name: create local config directory
+  file:
+    path: /srv/postfix/local_config
+    state: directory
+
+- name: copy postfix local config
+  copy:
+    src: files/update_config.sh
+    dest: /srv/postfix/local_config/update_config.sh
+  notify: update postfix config
+
+- name: start postfix container
+  docker_container:
+    name: postfix
+    image: "{{ docker.local_registry + '/' + 'postfix' }}"
+    pull: yes
+    restart_policy: unless-stopped
+    ports:
+      - "95.179.193.231:25:25/tcp"
+    volumes:
+      - "/srv/postfix/local_config:/etc/postfix/local_config"
+      - "/srv/postfix/spool:/var/spool/postfix"
