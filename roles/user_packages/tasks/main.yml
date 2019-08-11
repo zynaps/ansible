@@ -10,6 +10,7 @@
       'jq',
       'rsync',
       'socat',
+      'sudo',
       'tcpdump',
       'tmux',
       'vim',
