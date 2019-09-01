@@ -12,5 +12,13 @@
       register: check_python
 
     - name: install python
-      raw: apt install -y python-minimal
+      raw: apt install -y python3-minimal python3-pip
       when: check_python.rc != 0
+
+- name: add users and user packages
+  hosts: all
+  user: root
+
+  roles:
+    - user_packages
+    - users

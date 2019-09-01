@@ -1,8 +1,0 @@
----
-- name: bootstrap docker
-  hosts: dockers
-  become: yes
-
-  roles:
-    - pip
-    - docker
