@@ -24,7 +24,6 @@
   copy:
     src: files/update_config.sh
     dest: /srv/postfix/local_config/update_config.sh
-  notify: update postfix config
 
 - name: start postfix container
   docker_container:
@@ -37,3 +36,7 @@
     volumes:
       - "/srv/postfix/local_config:/etc/postfix/local_config"
       - "/srv/postfix/spool:/var/spool/postfix"
+
+- name: update postfix config
+  shell: docker exec postfix /etc/postfix/local_config/update_config.sh
+  delegate_to: escape
