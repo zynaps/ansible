@@ -1,7 +1,0 @@
----
-- name: setup wireguard network
-  hosts: wireguards
-  become: yes
-
-  roles:
-    - wireguard
