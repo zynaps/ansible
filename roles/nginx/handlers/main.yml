@@ -1,4 +1,3 @@
 ---
 - name: nginx reload
   shell: docker exec nginx nginx -s reload
-  delegate_to: escape
