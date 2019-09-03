@@ -3,7 +3,6 @@
   git:
     repo: https://github.com/zynaps/postfix.git
     dest: "{{ ansible_env.HOME + '/' + 'postfix' }}"
-  delegate_to: garden
 
 - name: build and push postfix container
   docker_image:
@@ -13,7 +12,6 @@
     name: "{{ docker.local_registry + '/' + 'postfix' }}"
     push: yes
     source: build
-  delegate_to: garden
 
 - name: create local config directory
   file:
@@ -39,4 +37,3 @@
 
 - name: update postfix config
   shell: docker exec postfix /etc/postfix/local_config/update_config.sh
-  delegate_to: escape

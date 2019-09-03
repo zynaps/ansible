@@ -3,7 +3,6 @@
   git:
     repo: https://github.com/zynaps/rutor_watch.git
     dest: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
-  delegate_to: garden
 
 - name: build and push rutor_watch container
   docker_image:
@@ -12,7 +11,6 @@
     name: "{{ docker.local_registry + '/' + 'rutor_watch' }}"
     push: yes
     source: build
-  delegate_to: garden
 
 - name: start rutor_watch container
   docker_container:
