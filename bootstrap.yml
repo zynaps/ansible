@@ -5,15 +5,15 @@
   user: root
 
   tasks:
-    - name: check for python
+    - name: checking for any python version
       raw: test -e /usr/bin/python
       changed_when: false
       failed_when: false
-      register: check_python
+      register: python_exists
 
-    - name: install python
-      raw: apt install -y python3-minimal python3-pip
-      when: check_python.rc != 0
+    - name: installing python3
+      raw: apt install -y python3-minimal python3-pip python3-apt
+      when: python_exists.rc != 0
 
 - name: add users and user packages
   hosts: all
