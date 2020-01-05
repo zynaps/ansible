@@ -5,6 +5,7 @@
   tasks:
     - name: checkout helper modules
       git:
+        accept_hostkey: true
         repo: "{{ item.repo }}"
         dest: "{{ ansible_env.HOME + '/' + item.dest }}"
       with_items:
@@ -18,6 +19,7 @@
 
     - name: clone bare dotfiles repository
       git:
+        accept_hostkey: true
         repo: https://github.com/zynaps/dotfiles.git
         dest: "{{ ansible_env.HOME + '/' + '.dotfiles' }}"
         bare: yes
