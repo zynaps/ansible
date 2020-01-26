@@ -31,9 +31,9 @@
         name: status.showUntrackedFiles
         value: 'no'
 
-    - name: checkout base dotfiles
+    - name: forced checkout base dotfiles
       shell: |
-        git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+        git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout --force
 
     - name: pre create sensetive files
       file:
