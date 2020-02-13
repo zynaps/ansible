@@ -14,11 +14,3 @@
     - name: installing python3
       raw: apt install -y python3-minimal python3-pip python3-apt
       when: python_exists.rc != 0
-
-- name: add users and user packages
-  hosts: all
-  user: root
-
-  roles:
-    - user_packages
-    - users
