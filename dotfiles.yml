@@ -3,30 +3,22 @@
   hosts: all
 
   tasks:
-    - name: checkout helper modules
+    - name: checkout Oh My Zsh
       git:
         accept_hostkey: true
-        repo: "{{ item.repo }}"
-        dest: "{{ ansible_env.HOME + '/' + item.dest }}"
-      with_items:
-        - { repo: 'https://github.com/robbyrussell/oh-my-zsh', dest: '.oh-my-zsh' }
-        - { repo: 'https://github.com/tpope/vim-pathogen', dest: '.vim/bundle/vim-pathogen' }
-        - { repo: 'https://github.com/chriskempson/base16-vim', dest: '.vim/bundle/base16-vim' }
-        - { repo: 'https://github.com/tpope/vim-repeat', dest: '.vim/bundle/vim-repeat' }
-        - { repo: 'https://github.com/tpope/vim-commentary', dest: '.vim/bundle/vim-commentary' }
-        - { repo: 'https://github.com/ntpeters/vim-better-whitespace', dest: '.vim/bundle/vim-better-whitespace' }
-        - { repo: 'https://github.com/now/vim-restore-position', dest: '.vim/bundle/vim-restore-position' }
+        repo: https://github.com/robbyrussell/oh-my-zsh
+        dest: "{{ ansible_env.HOME + '/.oh-my-zsh' }}"
 
     - name: clone bare dotfiles repository
       git:
         accept_hostkey: true
         repo: https://github.com/zynaps/dotfiles.git
-        dest: "{{ ansible_env.HOME + '/' + '.dotfiles' }}"
+        dest: "{{ ansible_env.HOME + '/.dotfiles' }}"
         bare: yes
 
     - name: hide untracked files
       git_config:
-        repo: "{{ ansible_env.HOME + '/' + '.dotfiles' }}"
+        repo: "{{ ansible_env.HOME + '/.dotfiles' }}"
         scope: local
         name: status.showUntrackedFiles
         value: 'no'
