@@ -1,0 +1,8 @@
+---
+- name: add users and user packages
+  hosts: all
+  user: root
+
+  roles:
+    - user_packages
+    - users
