@@ -1,0 +1,8 @@
+---
+- name: darwin full setup
+  hosts: darwin
+  become: yes
+
+  roles:
+    - wireguard
+    - docker

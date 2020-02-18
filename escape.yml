@@ -1,0 +1,8 @@
+---
+- name: escape full setup
+  hosts: escape
+  become: yes
+
+  roles:
+    - wireguard
+    - docker
