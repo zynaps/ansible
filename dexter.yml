@@ -1,0 +1,8 @@
+---
+- name: dexter full setup
+  hosts: dexter
+  become: yes
+
+  roles:
+    - wireguard
+    - docker
