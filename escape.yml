@@ -6,3 +6,10 @@
   roles:
     - wireguard
     - docker
+    - registry
+    - postfix
+    - redis
+    - rutor_watch
+    - feeder
+    - nginx
+    - mtg
