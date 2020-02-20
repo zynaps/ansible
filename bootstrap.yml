@@ -1,10 +1,16 @@
 ---
-- name: install python
+- name: bootstrap system
   hosts: all
   gather_facts: no
   user: root
 
   tasks:
+    - name: update list of available packages
+      raw: apt update
+
+    - name: full upgrade the system
+      raw: apt full-upgrade -y
+
     - name: checking for any python version
       raw: test -e /usr/bin/python
       changed_when: false
