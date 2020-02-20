@@ -8,20 +8,19 @@
   docker_image:
     build:
       path: "{{ ansible_env.HOME + '/' + 'postfix' }}"
-      pull: yes
+      pull: no
     name: "{{ docker.local_registry + '/' + 'postfix' }}"
     push: yes
+    state: present
+    force_source: yes
     source: build
 
-- name: create local config directory
-  file:
-    path: /srv/postfix/local_config
-    state: directory
-
-- name: copy postfix local config
+- name: copy postfix configuration script
   copy:
     src: files/update_config.sh
-    dest: /srv/postfix/local_config/update_config.sh
+    dest: /srv/postfix/update_config.sh
+    mode: 0700
+  register: update_config
 
 - name: start postfix container
   docker_container:
@@ -32,8 +31,12 @@
     ports:
       - "95.179.193.231:25:25/tcp"
     volumes:
-      - "/srv/postfix/local_config:/etc/postfix/local_config"
+      - "/srv/postfix/update_config.sh:/etc/postfix/update_config.sh"
       - "/srv/postfix/spool:/var/spool/postfix"
 
 - name: update postfix config
-  shell: docker exec postfix /etc/postfix/local_config/update_config.sh
+  shell: docker exec postfix /etc/postfix/update_config.sh
+
+- name: postfix reload
+  shell: docker exec postfix postfix reload
+  when: update_config.changed
