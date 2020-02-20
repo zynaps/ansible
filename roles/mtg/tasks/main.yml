@@ -3,7 +3,7 @@
   docker_container:
     name: mtg
     image: nineseconds/mtg:stable
-    command: "{{ mtg_secret }}"
+    command: run "{{ mtg_secret }}"
     restart_policy: unless-stopped
     ports:
       - "3128:3128/tcp"
