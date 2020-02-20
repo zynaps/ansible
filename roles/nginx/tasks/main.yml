@@ -8,6 +8,7 @@
   docker_image:
     build:
       path: "{{ ansible_env.HOME + '/' + 'nginx' }}"
+      pull: no
     name: "{{ docker.local_registry + '/' + 'nginx' }}"
     push: yes
     source: build
