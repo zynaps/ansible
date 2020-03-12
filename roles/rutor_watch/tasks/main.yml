@@ -10,6 +10,7 @@
       path: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
       pull: no
     name: "{{ docker.local_registry + '/' + 'rutor_watch' }}"
+    force_source: yes
     push: yes
     source: build
 

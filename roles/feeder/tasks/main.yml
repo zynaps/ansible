@@ -10,6 +10,7 @@
       path: "{{ ansible_env.HOME + '/' + 'feeder' }}"
       pull: no
     name: "{{ docker.local_registry + '/' + 'feeder' }}"
+    force_source: yes
     push: yes
     source: build
 
