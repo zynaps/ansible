@@ -4,4 +4,12 @@ iface wg0 inet static
         netmask 255.255.255.0
         pre-up ip link add $IFACE type wireguard
         pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf
+        {% if wireguard.exit_node is sameas true -%}
+        post-up iptables -t nat -A POSTROUTING -s {{ wireguard.network }} -o en+ -j MASQUERADE
+        post-up iptables -A INPUT -i $IFACE -j ACCEPT
+        post-up iptables -A FORWARD -i $IFACE -j ACCEPT
+        pre-down iptables -t nat -D POSTROUTING -s {{ wireguard.network }} -o en+ -j MASQUERADE
+        pre-down iptables -D INPUT -i $IFACE -j ACCEPT
+        pre-down iptables -D FORWARD -i $IFACE -j ACCEPT
+        {% endif -%}
         post-down ip link del $IFACE
