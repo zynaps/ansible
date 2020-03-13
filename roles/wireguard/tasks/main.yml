@@ -31,36 +31,13 @@
     mode: 0600
   no_log: true
 
-- name: add boot-time iptables rules loader
-  apt:
-    name: [
-      'iptables-persistent'
-    ]
-  when: wireguard.exit_node is defined and wireguard.exit_node
-
-- name: add masquerade at exit node
-  iptables_raw:
-    name: masquerade for wireguard peers
-    table: nat
-    rules: |
-      -A POSTROUTING -s 10.7.0.0/24 -o en+ -j MASQUERADE
-  when: wireguard.exit_node is defined and wireguard.exit_node
-
-- name: add forwarding for wireguard peers
-  iptables_raw:
-    name: forwarding for wireguard peers
-    rules: |
-      -A INPUT -i wg0 -j ACCEPT
-      -A FORWARD -i wg0 -j ACCEPT
-  when: wireguard.exit_node is defined and wireguard.exit_node
-
 - name: enable routing at exit node
   sysctl:
     name: net.ipv4.ip_forward
     value: '1'
     sysctl_file: /etc/sysctl.d/90-ip_forward.conf
     sysctl_set: yes
-  when: wireguard.exit_node is defined and wireguard.exit_node
+  when: wireguard.exit_node is sameas true
 
 - name: restart wireguard interface
   shell: |
