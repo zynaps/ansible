@@ -11,12 +11,12 @@ escape
 garden
 
 [wireguards]
-darwin
 dexter
 escape
 garden
 
 [wireguard_users]
+darwin
 shogun
 
 [wireguard_peers:children]
