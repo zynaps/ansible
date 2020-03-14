@@ -29,12 +29,12 @@
 
     - name: precreate sensetive files
       file:
-        path: "{{ item }}"
+        path: "{{ ansible_env.HOME + item }}"
         mode: 0600
         state: touch
       with_items:
-        - "{{ '.lesshst' }}"
-        - "{{ '.viminfo' }}"
+        - "{{ '/.lesshst' }}"
+        - "{{ '/.viminfo' }}"
 
     - name: set zsh as shell
       become: yes
