@@ -1,8 +1,9 @@
 ---
-- name: dexter full setup
+- name: dexter setup
   hosts: dexter
   become: yes
 
   roles:
+    - common_packages
     - wireguard
     - docker

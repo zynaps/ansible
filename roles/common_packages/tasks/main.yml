@@ -1,5 +1,5 @@
 ---
-- name: install user packages
+- name: install users packages
   apt:
     name: [
       'curl',

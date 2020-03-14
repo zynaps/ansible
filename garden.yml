@@ -1,8 +1,9 @@
 ---
-- name: garden full setup
+- name: garden setup
   hosts: garden
   become: yes
 
   roles:
+    - common_packages
     - wireguard
     - docker

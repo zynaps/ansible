@@ -1,9 +1,10 @@
 ---
-- name: escape full setup
+- name: escape setup
   hosts: escape
   become: yes
 
   roles:
+    - common_packages
     - wireguard
     - docker
     - registry
