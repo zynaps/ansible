@@ -12,6 +12,7 @@
 - name: install wireguard toolkit
   apt:
     name: wireguard
+  register: wireguard_install
 
 - name: add wireguard interface config
   template:
@@ -38,6 +39,11 @@
     sysctl_file: /etc/sysctl.d/90-ip_forward.conf
     sysctl_set: yes
   when: wireguard.exit_node is sameas true
+
+- name: reboot if wireguard newly installed
+  reboot:
+    pre_reboot_delay: 60
+  when: wireguard_install.changed is sameas true
 
 - name: restart wireguard interface
   shell: |
