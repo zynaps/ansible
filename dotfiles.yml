@@ -1,5 +1,5 @@
 ---
-- name: dotfiles for regular user
+- name: dotfiles for current user and zsh as shell
   hosts: all
 
   tasks:
@@ -27,7 +27,7 @@
       shell: |
         git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout --force
 
-    - name: pre create sensetive files
+    - name: precreate sensetive files
       file:
         path: "{{ item }}"
         mode: 0600
@@ -35,3 +35,9 @@
       with_items:
         - "{{ '.lesshst' }}"
         - "{{ '.viminfo' }}"
+
+    - name: set zsh as shell
+      become: yes
+      user:
+        name: "{{ lookup('env', 'USER') }}"
+        shell: /bin/zsh
