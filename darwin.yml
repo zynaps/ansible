@@ -1,8 +1,9 @@
 ---
-- name: darwin full setup
+- name: darwin setup
   hosts: darwin
   become: yes
 
   roles:
+    - common_packages
     - wireguard
     - docker
