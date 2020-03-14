@@ -1,22 +1,47 @@
 ---
-- name: bootstrap system
+- name: bootstrap host
   hosts: all
   gather_facts: no
   user: root
 
   tasks:
-    - name: update list of available packages
-      raw: apt update
+    - name: full upgrade host
+      raw: |
+        apt update
+        apt full-upgrade -y
 
-    - name: full upgrade the system
-      raw: apt full-upgrade -y
+    - name: install python3
+      raw: which python3 || apt install -y python3-minimal python3-pip python3-apt
 
-    - name: checking for any python version
-      raw: test -e /usr/bin/python
-      changed_when: false
-      failed_when: false
-      register: python_exists
+- name: first user
+  hosts: all
+  user: root
 
-    - name: installing python3
-      raw: apt install -y python3-minimal python3-pip python3-apt
-      when: python_exists.rc != 0
+  tasks:
+    - name: install sudo
+      apt:
+        name: sudo
+
+    - name: passwordless sudo for sudo group
+      copy:
+        dest: /etc/sudoers.d/99-sudo-nopasswd
+        content: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n"
+        owner: root
+        group: root
+        mode: 0440
+
+    - name: add first user
+      user:
+        name: igor
+        comment: Igor Vinokurov
+        uid: 1000
+        groups: sudo
+        append: yes
+        shell: /bin/bash
+        state: present
+
+    - name: auth key for first user
+      authorized_key:
+        user: igor
+        key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
+        state: present
