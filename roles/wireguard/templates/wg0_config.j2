@@ -8,6 +8,9 @@ ListenPort = 51820
 PublicKey = {{ hostvars[host].wireguard.public_key }}
 AllowedIPs = {{ hostvars[host].wireguard.ip + '/32' }}
 Endpoint = {{ hostvars[host].wireguard.endpoint }}
+{% if inventory_hostname in groups.wireguard_users and host in groups.wireguards %}
+PersistentKeepalive = 25
+{% endif %}
 
 {% endif %}
 {% endfor %}
