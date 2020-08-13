@@ -1,0 +1,17 @@
+---
+- name: add xrdp
+  apt:
+    name: xrdp
+
+- name: add xrdp to sslcert group
+  user:
+    name: xrdp
+    groups: ssl-cert
+    append: yes
+  register: update_group
+
+- name: restart xrdp service
+  service:
+    name: xrdp
+    state: restarted
+  when: update_group.changed
