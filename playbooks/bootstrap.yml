@@ -15,11 +15,6 @@
         upgrade: full
         update_cache: yes
 
-- name: first user
-  hosts: all
-  user: root
-
-  tasks:
     - name: install sudo
       apt:
         name: sudo
