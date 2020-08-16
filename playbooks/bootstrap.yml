@@ -11,7 +11,7 @@
         apt full-upgrade -y
 
     - name: install python3
-      raw: which python3 || apt install -y python3-minimal python3-pip python3-apt
+      raw: apt install -y python3-minimal python3-pip python3-apt
 
 - name: first user
   hosts: all
