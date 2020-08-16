@@ -26,19 +26,3 @@
         owner: root
         group: root
         mode: 0440
-
-    - name: add first user
-      user:
-        name: igor
-        comment: Igor Vinokurov
-        uid: 1000
-        groups: sudo
-        append: yes
-        shell: /bin/bash
-        state: present
-
-    - name: auth key for first user
-      authorized_key:
-        user: igor
-        key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
-        state: present
