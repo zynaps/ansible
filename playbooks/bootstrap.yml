@@ -5,13 +5,15 @@
   user: root
 
   tasks:
-    - name: full upgrade host
-      raw: |
-        apt update
-        apt full-upgrade -y
-
     - name: install python3
       raw: apt install -y python3-minimal python3-pip python3-apt
+
+    - setup:
+
+    - name: full upgrade host
+      apt:
+        upgrade: full
+        update_cache: yes
 
 - name: first user
   hosts: all
