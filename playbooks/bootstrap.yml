@@ -26,3 +26,45 @@
         owner: root
         group: root
         mode: 0440
+
+    - block:
+      - name: set new hostname
+        hostname:
+          name: "{{ inventory_hostname_short }}"
+          use: systemd
+
+      - name: editing /etc/hosts file
+        replace:
+          path: /etc/hosts
+          regexp: "{{ origin_host }}"
+          replace: "{{ inventory_hostname_short }}"
+
+      - name: set new ip address
+        replace:
+          path: /etc/network/interfaces.d/enp0s8
+          regexp: "{{ origin_ip }}"
+          replace: "{{ target_ip }}"
+
+      - name: find sshd host keys
+        find:
+          path: /etc/ssh
+          pattern: 'ssh_host_\w+_key(\.pub)?'
+          use_regex: yes
+        register: files_to_delete
+
+      - name: remove sshd host keys
+        file:
+          path: "{{ item.path }}"
+          state: absent
+        with_items: "{{ files_to_delete.files }}"
+
+      - name: regenerate sshd host keys
+        shell: |
+          ssh-keygen -A
+
+      - name: shutdown host
+        shell: |
+          shutdown -h +1
+
+      - meta: end_host
+      when: origin_host is defined
