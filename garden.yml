@@ -1,9 +1,0 @@
----
-- name: garden setup
-  hosts: garden
-  become: yes
-
-  roles:
-    - common_packages
-    - wireguard
-    - docker

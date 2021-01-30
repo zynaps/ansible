@@ -1,19 +1,13 @@
 [all]
 darwin
-dexter
 escape
-garden
 
 [docker]
 darwin
-dexter
 escape
-garden
 
 [wireguards]
-dexter
 escape
-garden
 
 [wireguard_users]
 darwin
