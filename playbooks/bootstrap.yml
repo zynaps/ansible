@@ -6,14 +6,13 @@
 
   tasks:
     - name: install python3
-      raw: apt install -y python3-minimal python3-pip python3-apt
+      raw: apt update && apt install -y python3-minimal python3-pip python3-apt
 
     - setup:
 
     - name: full upgrade host
       apt:
         upgrade: full
-        update_cache: yes
 
     - name: install sudo
       apt:
