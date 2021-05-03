@@ -1,14 +1,4 @@
 ---
-- name: set limit for testing packages
-  copy:
-    dest: /etc/apt/preferences.d/limit-testing
-    content: "Package: *\nPin: release a=testing\nPin-Priority: 90\n"
-
-- name: add wireguard repository
-  apt_repository:
-    repo: deb http://deb.debian.org/debian/ testing main
-    filename: testing-wireguard
-
 - name: install wireguard toolkit
   apt:
     name: wireguard
