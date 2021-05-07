@@ -11,6 +11,5 @@
     - postfix
     - redis
     - rutor_watch
-    - feeder
     - nginx
-    - mtg
+    - feeder
