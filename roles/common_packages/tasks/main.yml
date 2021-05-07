@@ -8,6 +8,7 @@
       'htop',
       'iperf3',
       'jq',
+      'man-db',
       'rsync',
       'socat',
       'sudo',
