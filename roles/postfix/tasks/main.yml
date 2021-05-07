@@ -15,12 +15,17 @@
     force_source: yes
     source: build
 
+- name: create postfix directory
+  file:
+    path: /srv/postfix
+    state: directory
+
 - name: copy postfix configuration script
   copy:
     src: files/update_config.sh
     dest: /srv/postfix/update_config.sh
     mode: 0700
-  register: update_config
+  register: update_postfix_config
 
 - name: start postfix container
   docker_container:
@@ -39,4 +44,4 @@
 
 - name: postfix reload
   shell: docker exec postfix postfix reload
-  when: update_config.changed
+  when: update_postfix_config.changed
