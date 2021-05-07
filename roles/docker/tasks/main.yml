@@ -37,13 +37,19 @@
       }
     dest: /etc/docker/daemon.json
     mode: 0600
-  notify: restart docker
+  register: update_docker_config
 
 - name: enable and start docker service
   service:
     name: docker
     state: started
     enabled: yes
+
+- name: restart docker
+  service:
+    name: docker
+    state: restarted
+  when: update_docker_config.changed
 
 - name: add regular user to docker group
   user:
