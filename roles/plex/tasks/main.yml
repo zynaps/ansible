@@ -1,0 +1,23 @@
+---
+- name: create plex directories
+  file:
+    path: "{{ '/srv/plex/' + item }}"
+    state: directory
+  with_items:
+    - config
+    - media/movies
+    - media/music
+    - media/photos
+    - media/shows
+
+- name: start plex container
+  docker_container:
+    name: plex
+    image: wernight/plex-media-server:latest
+    restart_policy: unless-stopped
+    user: root
+    ports:
+      - "32400:32400/tcp"
+    volumes:
+      - "/srv/plex/config:/config"
+      - "/srv/plex/media:/media"
