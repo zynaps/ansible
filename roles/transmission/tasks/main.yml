@@ -1,0 +1,53 @@
+---
+- name: clone transmission
+  git:
+    repo: https://github.com/zynaps/transmission.git
+    dest: "{{ ansible_env.HOME + '/' + 'transmission' }}"
+
+- name: build and push transmission container
+  docker_image:
+    build:
+      path: "{{ ansible_env.HOME + '/' + 'transmission' }}"
+      pull: no
+    name: "{{ docker.local_registry + '/' + 'transmission' }}"
+    push: yes
+    source: build
+
+- name: create transmission directories
+  file:
+    path: "{{ '/srv/transmission/' + item }}"
+    state: directory
+  with_items:
+    - watch
+    - incomplete
+    - complete
+
+- name: change mode for watch directory
+  file:
+    path: /srv/transmission/watch
+    mode: 0777
+
+- name: tuning kernel parameters
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_file: "{{ '/etc/sysctl.d/' + item.file }}"
+    sysctl_set: yes
+  with_items:
+    - { name: 'net.core.rmem_max', value: '4194304', file: '94-rmem_max' }
+    - { name: 'net.core.wmem_max', value: '1048576', file: '95-wmem_max' }
+
+- name: start transmission container
+  docker_container:
+    name: transmission
+    image: "{{ docker.local_registry + '/' + 'transmission' }}"
+    restart_policy: unless-stopped
+    ports:
+      - "{{ wireguard.ip + ':9091:9091/tcp' }}"
+      - "51413:51413/tcp"
+      - "51413:51413/udp"
+    volumes:
+      - "/srv/transmission/watch:/watch"
+      - "/srv/transmission/incomplete:/incomplete"
+      - "/srv/transmission/complete:/complete"
+      - "/srv/plex/media/movies:/movies"
