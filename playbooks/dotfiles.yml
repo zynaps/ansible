@@ -15,6 +15,7 @@
         repo: https://github.com/zynaps/dotfiles.git
         dest: "{{ ansible_env.HOME + '/.dotfiles' }}"
         bare: yes
+      register: update_dotfiles
 
     - name: hide untracked files
       git_config:
@@ -26,6 +27,7 @@
     - name: forced checkout base dotfiles
       shell: |
         git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout --force
+      when: update_dotfiles.changed
 
     - name: precreate sensetive files
       file:
