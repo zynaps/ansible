@@ -2,24 +2,26 @@
 - name: install wireguard toolkit
   apt:
     name: wireguard
-  register: wireguard_install
 
 - name: add wireguard interface config
   template:
     dest: /etc/network/interfaces.d/wg0.conf
     src: templates/wg0_interface.j2
+  register: update_wireguard_config
 
 - name: make wireguard config directory
   file:
     path: /etc/wireguard
     state: directory
     mode: 0700
+  register: update_wireguard_config
 
 - name: add wireguard config
   template:
     dest: /etc/wireguard/wg0.conf
     src: templates/wg0_config.j2
     mode: 0600
+  register: update_wireguard_config
   no_log: true
 
 - name: enable routing at exit node
@@ -34,3 +36,4 @@
   shell: |
     ifquery wg0 && ifdown --force --ignore-errors wg0 && sleep 1
     ifup --force --ignore-errors wg0
+  when: update_wireguard_config
