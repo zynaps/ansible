@@ -24,14 +24,6 @@
   register: update_wireguard_config
   no_log: true
 
-- name: enable routing at exit node
-  sysctl:
-    name: net.ipv4.ip_forward
-    value: '1'
-    sysctl_file: /etc/sysctl.d/90-ip_forward.conf
-    sysctl_set: yes
-  when: wireguard.exit_node is sameas true
-
 - name: restart wireguard interface
   shell: |
     ifquery wg0 && ifdown --force --ignore-errors wg0 && sleep 1
