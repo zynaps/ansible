@@ -8,10 +8,6 @@
     name: xrdp
     groups: ssl-cert
     append: yes
-  register: update_group
+  notify: restart xrdp
 
-- name: restart xrdp service
-  service:
-    name: xrdp
-    state: restarted
-  when: update_group.changed
+- meta: flush_handlers
