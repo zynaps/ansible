@@ -5,7 +5,7 @@
 
 - name: add wireguard interface config
   template:
-    dest: /etc/network/interfaces.d/wg0.conf
+    dest: /etc/network/interfaces.d/wg0
     src: templates/wg0_interface.j2
   register: update_wireguard_config
 
