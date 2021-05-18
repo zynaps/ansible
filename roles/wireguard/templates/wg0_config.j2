@@ -6,11 +6,13 @@ ListenPort = 51820
 {% if host != inventory_hostname %}
 [Peer] # {{ host }}
 PublicKey = {{ hostvars[host].wireguard.public_key }}
-AllowedIPs = {{ hostvars[host].wireguard.ip + '/32' }}
-Endpoint = {{ hostvars[host].wireguard.endpoint }}
 {% if inventory_hostname in groups.wireguard_users and host in groups.wireguards %}
+AllowedIPs = {{ '0.0.0.0/0, ' + hostvars[host].wireguard.ip + '/32' }}
 PersistentKeepalive = 25
+{% else %}
+AllowedIPs = {{ hostvars[host].wireguard.ip + '/32' }}
 {% endif %}
+Endpoint = {{ hostvars[host].wireguard.endpoint }}
 
 {% endif %}
 {% endfor %}
