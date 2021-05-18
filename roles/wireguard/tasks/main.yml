@@ -1,7 +1,12 @@
 ---
-- name: install wireguard toolkit
+- name: install wireguard kernel modules
   apt:
     name: wireguard
+  when: ansible_kernel is version('5.6', '<')
+
+- name: install wireguard tools
+  apt:
+    name: wireguard-tools
 
 - name: add wireguard interface config
   template:
