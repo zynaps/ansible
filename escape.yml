@@ -6,6 +6,7 @@
   roles:
     - router
     - common_packages
+    - vnstat
     - wireguard
     - docker
     - registry
