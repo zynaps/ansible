@@ -1,5 +1,6 @@
 ---
 public_ip: 95.179.193.231
+
 wireguard:
   ip: 10.7.0.100
   private_key: !vault |
