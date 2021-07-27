@@ -6,13 +6,13 @@ escape
 darwin
 escape
 
-[wireguards]
+[wireguard]
+darwin
 escape
 
-[wireguard_users]
-darwin
+[wireguard_user]
 shogun
 
-[wireguard_peers:children]
-wireguards
-wireguard_users
+[wireguard_peer:children]
+wireguard
+wireguard_user

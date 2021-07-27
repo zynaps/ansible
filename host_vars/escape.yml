@@ -2,7 +2,7 @@
 public_ip: 95.179.193.231
 
 wireguard:
-  ip: 10.7.0.100
+  ip: 10.7.0.50
   private_key: !vault |
             $ANSIBLE_VAULT;1.1;AES256
             65626231366562656261373834323935383130373637306533656130326637633864366133336231
@@ -13,3 +13,4 @@ wireguard:
             3330666464393132373531346337303861373436316639656562
   public_key: jtZKO43bifX/a4cwynstY7gZyn9qIU2cYm86NMnM9kg=
   endpoint: 95.179.193.231:51820
+  exit_node: yes

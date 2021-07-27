@@ -1,0 +1,25 @@
+[Interface]
+PrivateKey = {{ wireguard.private_key }}
+Address = {{ wireguard.ip + '/32' }}
+{% if wireguard.exit_node is sameas true %}
+PostUp = iptables -t nat -A POSTROUTING -s {{ wireguard.network }} -o en+ -j MASQUERADE
+PostUp = iptables -A FORWARD -i %i -j ACCEPT
+PostDown = iptables -t nat -D POSTROUTING -s {{ wireguard.network }} -o en+ -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT
+{% endif %}
+ListenPort = 51820
+
+{% for host in groups.wireguard_peer %}
+{% if host != inventory_hostname %}
+[Peer] # {{ host }}
+PublicKey = {{ hostvars[host].wireguard.public_key }}
+{% if inventory_hostname in groups.wireguard_user and hostvars[host].wireguard.exit_node is sameas true %}
+AllowedIPs = {{ '0.0.0.0/0, ' + hostvars[host].wireguard.ip + '/32' }}
+PersistentKeepalive = 25
+{% else %}
+AllowedIPs = {{ hostvars[host].wireguard.ip + '/32' }}
+{% endif %}
+Endpoint = {{ hostvars[host].wireguard.endpoint }}
+
+{% endif %}
+{% endfor %}

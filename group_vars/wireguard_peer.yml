@@ -1,3 +1,4 @@
 ---
 wireguard:
+  network: 10.7.0.0/24
   exit_node: no

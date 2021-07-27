@@ -8,29 +8,25 @@
   apt:
     name: wireguard-tools
 
-- name: add wireguard interface config
-  template:
-    dest: /etc/network/interfaces.d/wg0
-    src: templates/wg0_interface.j2
-  register: update_wireguard_config
-
 - name: make wireguard config directory
   file:
     path: /etc/wireguard
     state: directory
     mode: 0700
-  register: update_wireguard_config
 
 - name: add wireguard config
   template:
     dest: /etc/wireguard/wg0.conf
-    src: templates/wg0_config.j2
+    src: templates/wg0.conf.j2
     mode: 0600
-  register: update_wireguard_config
+  notify: restart wireguard
   no_log: true
 
-- name: restart wireguard interface
-  shell: |
-    ifquery wg0 && ifdown --force --ignore-errors wg0 && sleep 1
-    ifup --force --ignore-errors wg0
-  when: update_wireguard_config
+- name: enable and start wireguard
+  systemd:
+    service: wg-quick@wg0
+    enabled: yes
+    daemon_reload: yes
+    state: started
+
+- meta: flush_handlers
