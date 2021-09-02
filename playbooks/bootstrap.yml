@@ -5,8 +5,8 @@
   user: root
 
   tasks:
-    - name: install python3
-      raw: apt update && apt install -y python3-minimal python3-pip python3-apt
+    - name: install python3 packages
+      raw: apt install -y python3-pip python3-apt
 
     - setup:
 
