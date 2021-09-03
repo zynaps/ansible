@@ -1,0 +1,3 @@
+---
+- name: reload postfix
+  command: docker exec postfix sh /reload.sh

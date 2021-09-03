@@ -4,28 +4,31 @@
     repo: https://github.com/zynaps/postfix.git
     dest: "{{ ansible_env.HOME + '/' + 'postfix' }}"
 
-- name: build and push postfix container
+- name: build and push container
   docker_image:
     build:
       path: "{{ ansible_env.HOME + '/' + 'postfix' }}"
       pull: no
     name: "{{ docker.local_registry + '/' + 'postfix' }}"
     push: yes
-    state: present
-    force_source: yes
     source: build
+    force_source: yes
+    state: present
 
-- name: create postfix directory
+- name: create directories
   file:
-    path: /srv/postfix
+    path: "{{ '/srv/postfix/' + item }}"
     state: directory
+  with_items:
+    - config
+    - spool
 
-- name: copy postfix configuration script
-  copy:
-    src: files/update_config.sh
-    dest: /srv/postfix/update_config.sh
-    mode: 0700
-  register: update_postfix_config
+- name: add config
+  template:
+    src: templates/configure.sh.j2
+    dest: /srv/postfix/config/configure.sh
+    mode: 0600
+  notify: reload postfix
 
 - name: start postfix container
   docker_container:
@@ -36,12 +39,7 @@
     ports:
       - "95.179.193.231:25:25/tcp"
     volumes:
-      - "/srv/postfix/update_config.sh:/etc/postfix/update_config.sh"
+      - "/srv/postfix/config/configure.sh:/configure.sh"
       - "/srv/postfix/spool:/var/spool/postfix"
 
-- name: update postfix config
-  shell: docker exec postfix /etc/postfix/update_config.sh
-
-- name: postfix reload
-  shell: docker exec postfix postfix reload
-  when: update_postfix_config.changed
+- meta: flush_handlers
