@@ -10,7 +10,7 @@
     - wireguard
     - docker
     - node_exporter
-    - registry
+    - docker_registry
     - postfix
     - redis
     - rutor_watch

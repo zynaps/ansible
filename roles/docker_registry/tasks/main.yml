@@ -1,7 +1,7 @@
 ---
 - name: start container
   docker_container:
-    name: registry
+    name: docker_registry
     image: registry
     restart_policy: unless-stopped
     ports:
