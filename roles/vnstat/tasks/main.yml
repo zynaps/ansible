@@ -1,9 +1,9 @@
 ---
-- name: install package
+- name: install
   apt:
     name: vnstat
 
-- name: reconfigure
+- name: configure
   lineinfile:
     dest: /etc/vnstat.conf
     regexp: "^#? *{{ item.key | regex_escape() }} "

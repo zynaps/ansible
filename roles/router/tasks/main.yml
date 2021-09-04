@@ -1,5 +1,5 @@
 ---
-- name: enable routing
+- name: enable ip forward
   sysctl:
     name: net.ipv4.ip_forward
     value: '1'

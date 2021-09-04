@@ -1,20 +1,21 @@
 ---
-- name: clone rutor_watch
+- name: clone
   git:
     repo: https://github.com/zynaps/rutor_watch.git
     dest: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
 
-- name: build and push rutor_watch container
+- name: build and push container
   docker_image:
     build:
       path: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
       pull: no
     name: "{{ docker.local_registry + '/' + 'rutor_watch' }}"
-    force_source: yes
     push: yes
     source: build
+    force_source: yes
+    state: present
 
-- name: start rutor_watch container
+- name: start container
   docker_container:
     name: rutor_watch
     image: "{{ docker.local_registry + '/' + 'rutor_watch' }}"

@@ -25,8 +25,7 @@
         value: 'no'
 
     - name: forced checkout base dotfiles
-      shell: |
-        git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout --force
+      shell: git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout --force
       when: update_dotfiles.changed
 
     - name: precreate sensetive files

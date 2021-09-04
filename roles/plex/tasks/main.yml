@@ -1,5 +1,5 @@
 ---
-- name: create plex directories
+- name: create directories
   file:
     path: "{{ '/srv/plex/' + item }}"
     state: directory
@@ -10,7 +10,7 @@
     - media/photos
     - media/shows
 
-- name: start plex container
+- name: start container
   docker_container:
     name: plex
     image: wernight/plex-media-server:latest

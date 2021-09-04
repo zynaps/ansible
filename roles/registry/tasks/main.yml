@@ -1,5 +1,5 @@
 ---
-- name: start docker registry
+- name: start container
   docker_container:
     name: registry
     image: registry

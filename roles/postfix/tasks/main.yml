@@ -1,5 +1,5 @@
 ---
-- name: clone postfix
+- name: clone
   git:
     repo: https://github.com/zynaps/postfix.git
     dest: "{{ ansible_env.HOME + '/' + 'postfix' }}"
@@ -30,7 +30,7 @@
     mode: 0600
   notify: reload postfix
 
-- name: start postfix container
+- name: start container
   docker_container:
     name: postfix
     image: "{{ docker.local_registry + '/' + 'postfix' }}"

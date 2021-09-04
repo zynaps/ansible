@@ -1,20 +1,20 @@
 ---
-- name: install wireguard kernel modules
+- name: install kernel modules
   apt:
     name: wireguard
   when: ansible_kernel is version('5.6', '<')
 
-- name: install wireguard tools
+- name: install tools
   apt:
     name: wireguard-tools
 
-- name: make wireguard config directory
+- name: create config directory
   file:
     path: /etc/wireguard
     state: directory
     mode: 0700
 
-- name: add wireguard config
+- name: add config
   template:
     dest: /etc/wireguard/wg0.conf
     src: templates/wg0.conf.j2
@@ -22,11 +22,11 @@
   notify: restart wireguard
   no_log: true
 
-- name: enable and start wireguard
+- name: enable and start service
   systemd:
     service: wg-quick@wg0
     enabled: yes
-    daemon_reload: yes
     state: started
+    daemon_reload: yes
 
 - meta: flush_handlers

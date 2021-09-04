@@ -1,10 +1,10 @@
 ---
-- name: clone transmission
+- name: clone
   git:
     repo: https://github.com/zynaps/transmission.git
     dest: "{{ ansible_env.HOME + '/' + 'transmission' }}"
 
-- name: build and push transmission container
+- name: build and push container
   docker_image:
     build:
       path: "{{ ansible_env.HOME + '/' + 'transmission' }}"
@@ -12,8 +12,10 @@
     name: "{{ docker.local_registry + '/' + 'transmission' }}"
     push: yes
     source: build
+    force_source: yes
+    state: present
 
-- name: create transmission directories
+- name: create directories
   file:
     path: "{{ '/srv/transmission/' + item }}"
     state: directory
@@ -22,7 +24,7 @@
     - incomplete
     - complete
 
-- name: change mode for watch directory
+- name: change permissions for watch directory
   file:
     path: /srv/transmission/watch
     mode: 0777
@@ -37,7 +39,7 @@
     - { name: 'net.core.rmem_max', value: '4194304', file: '94-rmem_max' }
     - { name: 'net.core.wmem_max', value: '1048576', file: '95-wmem_max' }
 
-- name: start transmission container
+- name: start container
   docker_container:
     name: transmission
     image: "{{ docker.local_registry + '/' + 'transmission' }}"

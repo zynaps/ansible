@@ -1,5 +1,5 @@
 ---
-- name: start mtg proxy
+- name: start container
   docker_container:
     name: mtg
     image: nineseconds/mtg:stable

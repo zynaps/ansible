@@ -1,9 +1,9 @@
 ---
-- name: add xrdp
+- name: install
   apt:
     name: xrdp
 
-- name: add xrdp to sslcert group
+- name: add xrdp user to sslcert group
   user:
     name: xrdp
     groups: ssl-cert
