@@ -15,6 +15,11 @@
     force_source: yes
     state: present
 
+- name: create sites directory
+  file:
+    path: /srv/nginx/sites.d
+    state: directory
+
 - name: start container
   docker_container:
     name: nginx

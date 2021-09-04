@@ -10,6 +10,11 @@
     - { name: 'net.ipv4.tcp_max_syn_backlog', value: '512', file: '92-tcp_max_syn_backlog.conf' }
     - { name: 'net.core.somaxconn', value: '512', file: '93-somaxconn.conf' }
 
+- name: create data directory
+  file:
+    path: /srv/redis/data
+    state: directory
+
 - name: start container
   docker_container:
     name: redis
