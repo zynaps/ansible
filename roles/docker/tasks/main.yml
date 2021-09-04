@@ -37,7 +37,7 @@
       }
     dest: /etc/docker/daemon.json
     mode: 0600
-  register: update_docker_config
+  notify: restart docker
 
 - name: enable and start docker service
   service:
@@ -45,14 +45,10 @@
     state: started
     enabled: yes
 
-- name: restart docker
-  service:
-    name: docker
-    state: restarted
-  when: update_docker_config.changed
-
 - name: add regular user to docker group
   user:
     name: "{{ lookup('env', 'USER') }}"
     groups: docker
     append: yes
+
+- meta: flush_handlers
