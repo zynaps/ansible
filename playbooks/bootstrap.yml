@@ -58,12 +58,10 @@
         with_items: "{{ files_to_delete.files }}"
 
       - name: regenerate sshd host keys
-        shell: |
-          ssh-keygen -A
+        command: ssh-keygen -A
 
       - name: shutdown host
-        shell: |
-          shutdown -h +1
+        command: shutdown -h +1
 
       - meta: end_host
       when: origin_host is defined
