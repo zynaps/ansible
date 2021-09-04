@@ -9,6 +9,7 @@
     - vnstat
     - wireguard
     - docker
+    - node_exporter
     - registry
     - postfix
     - redis

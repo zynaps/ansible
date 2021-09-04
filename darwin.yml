@@ -8,3 +8,4 @@
     - vnstat
     - wireguard
     - docker
+    - node_exporter

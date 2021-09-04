@@ -16,3 +16,7 @@ shogun
 [wireguard_peer:children]
 wireguard
 wireguard_user
+
+[node_exporter]
+escape
+darwin
