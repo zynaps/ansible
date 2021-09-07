@@ -1,0 +1,10 @@
+---
+- name: install
+  apt:
+    name: 'qemu-guest-agent'
+
+- name: enable and start service
+  service:
+    name: 'qemu-guest-agent'
+    state: started
+    enabled: yes

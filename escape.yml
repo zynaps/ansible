@@ -4,6 +4,7 @@
   become: yes
 
   roles:
+    - qemu_guest_agent
     - router
     - common_packages
     - vnstat
