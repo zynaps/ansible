@@ -13,7 +13,7 @@
 - name: start container
   docker_container:
     name: plex
-    image: wernight/plex-media-server:latest
+    image: wernight/plex-media-server
     restart_policy: unless-stopped
     user: root
     ports:
