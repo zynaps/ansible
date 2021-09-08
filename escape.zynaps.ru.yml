@@ -1,6 +1,6 @@
 ---
 - name: escape setup
-  hosts: escape
+  hosts: escape.zynaps.ru
   become: yes
 
   roles:

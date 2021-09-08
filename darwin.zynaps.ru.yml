@@ -1,6 +1,6 @@
 ---
 - name: darwin setup
-  hosts: darwin
+  hosts: darwin.zynaps.ru
   become: yes
 
   roles:

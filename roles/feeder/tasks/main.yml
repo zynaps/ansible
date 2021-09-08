@@ -23,7 +23,7 @@
     ports:
       - "{{ wireguard.ip + ':4567:4567/tcp' }}"
     env:
-      REDIS_URL: "{{ 'redis://' + hostvars['escape'].wireguard.ip + ':6379' }}"
+      REDIS_URL: "{{ 'redis://' + hostvars['escape.zynaps.ru'].wireguard.ip + ':6379' }}"
 
 - name: add nginx config
   template:
