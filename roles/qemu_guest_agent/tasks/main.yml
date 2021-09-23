@@ -4,7 +4,7 @@
     name: 'qemu-guest-agent'
 
 - name: enable and start service
-  service:
+  systemd:
     name: 'qemu-guest-agent'
     state: started
     enabled: yes

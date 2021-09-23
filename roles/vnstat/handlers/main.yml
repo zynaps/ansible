@@ -1,5 +1,5 @@
 ---
 - name: restart vnstat
-  service:
+  systemd:
     name: vnstat
     state: restarted

@@ -40,7 +40,7 @@
   notify: restart docker
 
 - name: enable and start service
-  service:
+  systemd:
     name: docker
     state: started
     enabled: yes

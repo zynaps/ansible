@@ -31,7 +31,7 @@
   notify: restart node_exporter
 
 - name: enable and start service
-  service:
+  systemd:
     name: node_exporter
     state: started
     enabled: yes
