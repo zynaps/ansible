@@ -1,32 +1,7 @@
 ---
-- name: add users
+- name: users
   hosts: all
   user: root
 
-  vars:
-    ssh_users:
-      - name: igor
-        comment: Igor Vinokurov
-        uid: 1000
-        key: "{{ lookup('file', 'ssh_keys/igor.pub') }}"
-
-  tasks:
-    - name: create users
-      user:
-        name: "{{ item.name }}"
-        comment: "{{ item.comment }}"
-        uid: "{{ item.uid }}"
-        groups: sudo
-        append: yes
-        shell: /bin/bash
-        state: present
-      with_items:
-        - "{{ ssh_users }}"
-
-    - name: add authorized_keys
-      authorized_key:
-        user: "{{ item.name }}"
-        key: "{{ item.key }}"
-        state: present
-      with_items:
-        - "{{ ssh_users }}"
+  roles:
+    - users

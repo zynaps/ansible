@@ -1,0 +1,44 @@
+---
+- name: add sensitive files to skeleton
+  file:
+    path: "{{ '/etc/skel/' + item }}"
+    state: touch
+    mode: 0600
+    modification_time: preserve
+    access_time: preserve
+  with_items:
+    - "{{ '.lesshst' }}"
+    - "{{ '.viminfo' }}"
+
+- name: install sudo and zsh
+  apt:
+    name:
+      - sudo
+      - zsh
+
+- name: passwordless sudo for sudo group
+  copy:
+    dest: /etc/sudoers.d/99-sudo-nopasswd
+    content: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n"
+    mode: 0440
+
+- name: add or delete
+  user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment }}"
+    uid: "{{ item.uid }}"
+    groups: "{{ item.groups | default('') }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: "{{ item.state }}"
+    remove: yes
+  with_items:
+    - "{{ users }}"
+
+- name: add authorized_keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.authorized_key }}"
+    state: present
+  when: item.state == 'present' and item.authorized_key is defined
+  with_items:
+    - "{{ users }}"

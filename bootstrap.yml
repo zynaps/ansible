@@ -14,18 +14,6 @@
       apt:
         upgrade: full
 
-    - name: install sudo
-      apt:
-        name: sudo
-
-    - name: passwordless sudo for sudo group
-      copy:
-        dest: /etc/sudoers.d/99-sudo-nopasswd
-        content: "%sudo ALL=(ALL:ALL) NOPASSWD: ALL\n"
-        owner: root
-        group: root
-        mode: 0440
-
     - block:
       - name: set new hostname
         hostname:

@@ -11,12 +11,10 @@
       'man-db',
       'rsync',
       'socat',
-      'sudo',
       'tcpdump',
       'tmux',
       'traceroute',
       'tree',
       'vim',
-      'whois',
-      'zsh'
+      'whois'
     ]
