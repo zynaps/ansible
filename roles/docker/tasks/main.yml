@@ -44,10 +44,4 @@
     state: started
     enabled: yes
 
-- name: add regular user to docker group
-  user:
-    name: "{{ lookup('env', 'USER') }}"
-    groups: docker
-    append: yes
-
 - meta: flush_handlers
