@@ -13,7 +13,7 @@
 
 - name: add repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ansible_distribution_release}} stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
 
 - name: install docker-ce
   apt:
@@ -28,7 +28,6 @@
   copy:
     content: |
       {
-        "insecure-registries": ["{{ docker.local_registry }}"],
         "log-driver": "json-file",
         "log-opts": {
           "max-file": "3",

@@ -9,7 +9,7 @@
     build:
       path: "{{ ansible_env.HOME + '/' + 'transmission' }}"
       pull: no
-    name: "{{ docker.local_registry + '/' + 'transmission' }}"
+    name: "{{ docker.registry + '/' + 'transmission' }}"
     push: yes
     source: build
     force_source: yes
@@ -42,7 +42,7 @@
 - name: start container
   docker_container:
     name: transmission
-    image: "{{ docker.local_registry + '/' + 'transmission' }}"
+    image: "{{ docker.registry + '/' + 'transmission' }}"
     restart_policy: unless-stopped
     ports:
       - "{{ wireguard.ip + ':9091:9091/tcp' }}"
