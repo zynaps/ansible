@@ -4,6 +4,7 @@
   become: yes
 
   roles:
+    - apt_update
     - qemu_guest_agent
     - router
     - common_packages

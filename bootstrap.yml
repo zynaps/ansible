@@ -12,6 +12,7 @@
 
     - name: full upgrade host
       apt:
+        update_cache: yes
         upgrade: full
       register: apt_full_upgrade
 
