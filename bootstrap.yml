@@ -13,6 +13,10 @@
     - name: full upgrade host
       apt:
         upgrade: full
+      register: apt_full_upgrade
+
+    - debug:
+        msg={{ apt_full_upgrade.stdout + apt_full_upgrade.stderr }}
 
     - block:
       - name: set new hostname
