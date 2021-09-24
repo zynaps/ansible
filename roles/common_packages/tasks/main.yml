@@ -1,20 +1,19 @@
 ---
 - name: install users packages
   apt:
-    name: [
-      'curl',
-      'dnsutils',
-      'git',
-      'htop',
-      'iperf3',
-      'jq',
-      'man-db',
-      'rsync',
-      'socat',
-      'tcpdump',
-      'tmux',
-      'traceroute',
-      'tree',
-      'vim',
-      'whois'
-    ]
+    name:
+      - curl
+      - dnsutils
+      - git
+      - htop
+      - iperf3
+      - jq
+      - man-db
+      - rsync
+      - socat
+      - tcpdump
+      - tmux
+      - traceroute
+      - tree
+      - vim
+      - whois

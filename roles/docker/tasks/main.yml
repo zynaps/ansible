@@ -1,10 +1,9 @@
 ---
 - name: add install prerequisites
   apt:
-    name: [
-      'apt-transport-https',
-      'software-properties-common',
-    ]
+    name:
+      - apt-transport-https
+      - software-properties-common
 
 - name: add GPG key
   apt_key:
