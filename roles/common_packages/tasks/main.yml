@@ -17,3 +17,29 @@
       - tree
       - vim
       - whois
+
+- name: get chezmoi current version info
+  command: dpkg-query --show chezmoi
+  register: chezmoi_current
+  failed_when: no
+
+- name: get chezmoi latest version info
+  uri:
+    url: https://api.github.com/repos/twpayne/chezmoi/releases/latest
+  register: chezmoi_latest
+  failed_when: no
+
+- name: extract chezmoi current and latest versions
+  set_fact:
+    chezmoi_latest: "{{ chezmoi_latest.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1') }}"
+    chezmoi_current: "{{ chezmoi_current.stdout|regex_search('^chezmoi\t([\\d\\.]+)$', '\\1') }}"
+
+- name: chezmoi is not installed
+  set_fact:
+    chezmoi_current: ['0']
+  when: chezmoi_current|length == 0
+
+- name: install dotfiles manager
+  apt:
+    deb: "https://github.com/twpayne/chezmoi/releases/download/v{{ chezmoi_latest|first }}/chezmoi_{{ chezmoi_latest|first }}_linux_amd64.deb"
+  when: chezmoi_latest is version(chezmoi_current, 'gt')
