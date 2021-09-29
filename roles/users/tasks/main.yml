@@ -10,11 +10,13 @@
     - "{{ '.lesshst' }}"
     - "{{ '.viminfo' }}"
 
-- name: install sudo and zsh
+- name: install sudo and popular shells
   apt:
     name:
       - sudo
+      - tcsh
       - zsh
+      - fish
 
 - name: passwordless sudo for sudo group
   copy:
