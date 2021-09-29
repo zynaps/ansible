@@ -1,8 +1,0 @@
----
-- name: users
-  hosts: all
-  user: root
-
-  roles:
-    - apt_update
-    - users
