@@ -4,10 +4,3 @@
   become: yes
 
   roles:
-    - apt_update
-    - common_packages
-    - vnstat
-    - wireguard
-    - docker
-    - node_exporter
-    - users

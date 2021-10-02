@@ -4,16 +4,8 @@
   become: yes
 
   roles:
-    - apt_update
-    - qemu_guest_agent
     - router
-    - common_packages
-    - vnstat
-    - wireguard
-    - docker
-    - node_exporter
     - docker_registry
-    - users
     - postfix
     - redis
     - rutor_watch

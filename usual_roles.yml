@@ -1,0 +1,13 @@
+---
+- name: usual roles applicable on any host
+  hosts: all
+  become: yes
+
+  roles:
+    - apt_update
+    - common_packages
+    - vnstat
+    - wireguard
+    - docker
+    - node_exporter
+    - users
