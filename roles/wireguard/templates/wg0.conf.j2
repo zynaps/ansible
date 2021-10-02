@@ -15,10 +15,10 @@ ListenPort = 51820
 PublicKey = {{ hostvars[host].wireguard.public_key }}
 {% if inventory_hostname in groups.wireguard_user and hostvars[host].wireguard.exit_node is sameas true %}
 AllowedIPs = {{ '0.0.0.0/0, ' + hostvars[host].wireguard.ip + '/32' }}
-PersistentKeepalive = 25
 {% else %}
 AllowedIPs = {{ hostvars[host].wireguard.ip + '/32' }}
 {% endif %}
+PersistentKeepalive = 25
 Endpoint = {{ hostvars[host].wireguard.endpoint }}
 
 {% endif %}
