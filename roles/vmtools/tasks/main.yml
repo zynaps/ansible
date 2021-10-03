@@ -1,4 +1,0 @@
----
-- name: add vmtools
-  apt:
-    name: open-vm-tools
