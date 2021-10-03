@@ -8,20 +8,47 @@
     shell: /usr/sbin/nologin
     state: present
 
-- name: download and extract
-  unarchive:
-    src: https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
-    dest: /tmp
-    mode: 0755
-    remote_src: true
+- name: get node_exporter current version info
+  command: node_exporter --version
+  register: node_exporter_current
+  failed_when: no
 
-- name: install binary
-  copy:
-    src: /tmp/node_exporter-1.2.2.linux-amd64/node_exporter
-    dest: /usr/bin
-    mode: 0755
-    remote_src: true
-  notify: restart node_exporter
+- name: get node_exporter latest version info
+  uri:
+    url: https://api.github.com/repos/prometheus/node_exporter/releases/latest
+  register: node_exporter_latest
+
+- name: extract node_exporter current and latest versions
+  set_fact:
+    node_exporter_latest: "{{ node_exporter_latest.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1') }}"
+    node_exporter_current: "{{ node_exporter_current.stdout|regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') }}"
+
+- name: because node_exporter is not installed
+  set_fact:
+    node_exporter_current: ['0']
+  when: node_exporter_current|length == 0
+
+- block:
+  - name: download and extract
+    unarchive:
+      src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest|first }}/node_exporter-{{ node_exporter_latest|first }}.linux-amd64.tar.gz
+      dest: /tmp
+      mode: 0755
+      remote_src: true
+
+  - name: install binary
+    copy:
+      src: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-amd64/node_exporter
+      dest: /usr/bin
+      mode: 0755
+      remote_src: true
+    notify: restart node_exporter
+
+  - name: remove temporary directory
+    file:
+      path: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-amd64
+      state: absent
+  when: node_exporter_latest is version(node_exporter_current, 'gt')
 
 - name: systemd unit file
   template:
