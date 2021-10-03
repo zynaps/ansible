@@ -4,18 +4,23 @@
     name:
       - curl
       - dnsutils
+      - fping
       - git
       - htop
       - iperf3
       - jq
       - man-db
+      - ncat
+      - nmap
       - rsync
       - socat
       - tcpdump
       - tmux
       - traceroute
       - tree
+      - tshark
       - vim
+      - wget
       - whois
 
 - name: get chezmoi current version info
