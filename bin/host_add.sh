@@ -1,33 +1,33 @@
 #!/bin/sh
 
-host=$2
-ip=$1
-endpoint=$3
-port=51820
+hostname=$1
+wireguard_endpoint_ip=$2
+wireguard_ip=$3
 
-if [ ! -f host_vars/$host.yml ]; then
-    public_key=`wg genkey | tee $host.key | wg pubkey`
-    private_key=`ansible-vault encrypt_string --vault-password-file ./.vault_password --encrypt-vault-id default --output - < $host.key`
-    rm -f $host.key
+if [ ! -f host_vars/$hostname.yml ]; then
+    public_key=`wg genkey | tee $hostname.key | wg pubkey`
+    private_key=`ansible-vault encrypt_string --vault-password-file ./.vault_password --encrypt-vault-id default --output - < $hostname.key`
+    rm -f $hostname.key
 
-    cat << EOF > host_vars/$host.yml
+    cat << EOF > host_vars/$hostname.yml
 ---
 wireguard:
-  ip: $ip
+  ip: $wireguard_ip
   private_key: $private_key
   public_key: $public_key
-  endpoint: $endpoint:$port
+  endpoint: $wireguard_endpoint_ip:51820
 EOF
 fi
 
-if [ ! -f $host.yml ]; then
-    cat << EOF > $host.yml
+if [ ! -f $hostname.yml ]; then
+    cat << EOF > $hostname.yml
 ---
 - import_playbook: common_roles.yml
 
-- name: $host setup
-  hosts: $host
+- name: $hostname setup
+  hosts: $hostname
   become: yes
 
+  roles:
 EOF
 fi
