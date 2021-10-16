@@ -1,8 +1,5 @@
 version: '3'
 
-vars:
-  DOMAIN: zynaps.ru
-
 tasks:
   host:add:
     desc: add host common playbook and wireguard variables
@@ -12,25 +9,25 @@ tasks:
   host:bootstrap:
     desc: install python with necessary libs, full upgrade host, add users
     cmds:
-      - ansible-playbook bootstrap.yml --limit {{.CLI_ARGS}}.{{.DOMAIN}}
+      - ansible-playbook bootstrap.yml --limit {{.CLI_ARGS}}
 
   host:setup:
     desc: setup common roles and declarated roles in host playbook
     cmds:
-      - ansible-playbook {{.CLI_ARGS}}.{{.DOMAIN}}.yml --limit {{.CLI_ARGS}}.{{.DOMAIN}}
+      - ansible-playbook {{.CLI_ARGS}}.yml --limit {{.CLI_ARGS}}
 
   dotfiles:add:
     desc: install dotfiles on a empty home
     cmds:
-      - ssh {{.CLI_ARGS}}.{{.DOMAIN}} chezmoi init --apply zynaps
+      - ssh {{.CLI_ARGS}} chezmoi init --apply zynaps
 
   dotfiles:changes:
     desc: see changes without actually applying them
     cmds:
-      - ssh {{.CLI_ARGS}}.{{.DOMAIN}} chezmoi git pull -- --rebase
-      - ssh {{.CLI_ARGS}}.{{.DOMAIN}} chezmoi diff
+      - ssh {{.CLI_ARGS}} chezmoi git pull -- --rebase
+      - ssh {{.CLI_ARGS}} chezmoi diff
 
   dotfiles:update:
     desc: updating dotfiles and externals
     cmds:
-      - ssh {{.CLI_ARGS}}.{{.DOMAIN}} chezmoi update --refresh-externals
+      - ssh {{.CLI_ARGS}} chezmoi update --refresh-externals

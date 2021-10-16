@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
 
-domain="zynaps.ru"
-
 hosts=()
 
 if [[ ${#@} -gt 0 ]]; then
     for host in ${@}; do
-        if [[ -f ${host}.$domain.yml ]]; then
+        if [[ -f ${host}.yml ]]; then
             hosts+=($host)
         fi
     done
 else
     echo "Select hosts:"
 
-    for yml in *.$domain.yml; do
-        host=`echo $yml | sed -e s/\.$domain.yml//`
+    for yml in *.yml; do
+        host=`echo $yml | sed -e s/\.yml//`
 
-        read -p "Host $host.$domain. Are you sure? [y/N] " response
+        read -p "Host $host. Are you sure? [y/N] " response
 
         if [[ $response =~ ^[Yy].* ]]; then
           hosts+=($host)
@@ -29,7 +27,7 @@ fi
 if [[ ${#hosts} -gt 0 ]]; then
     echo "Working on:"
 
-    printf "%s.$domain\n" ${hosts[@]}
+    printf "%s\n" ${hosts[@]}
 
     echo
 

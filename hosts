@@ -1,22 +1,22 @@
 [all]
-darwin.zynaps.ru
-escape.zynaps.ru
+darwin
+escape
 
 [docker]
-darwin.zynaps.ru
-escape.zynaps.ru
+darwin
+escape
 
 [wireguard]
-darwin.zynaps.ru
-escape.zynaps.ru
+darwin
+escape
 
 [wireguard_user]
-shogun.zynaps.ru
+shogun
 
 [wireguard_peer:children]
 wireguard
 wireguard_user
 
 [node_exporter]
-escape.zynaps.ru
-darwin.zynaps.ru
+escape
+darwin

@@ -2,7 +2,7 @@
 - import_playbook: common_roles.yml
 
 - name: escape setup
-  hosts: escape.zynaps.ru
+  hosts: escape
   become: yes
 
   roles:

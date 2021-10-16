@@ -1,3 +1,3 @@
 ---
 docker:
-  registry: "{{ hostvars['escape.zynaps.ru'].wireguard.ip + ':5000' }}"
+  registry: "{{ hostvars['escape'].wireguard.ip + ':5000' }}"
