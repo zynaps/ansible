@@ -31,14 +31,14 @@
 - block:
   - name: download and extract
     unarchive:
-      src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest|first }}/node_exporter-{{ node_exporter_latest|first }}.linux-amd64.tar.gz
+      src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest|first }}/node_exporter-{{ node_exporter_latest|first }}.linux-{{ ansible_architecture_mapped }}.tar.gz
       dest: /tmp
       mode: 0755
       remote_src: true
 
   - name: install binary
     copy:
-      src: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-amd64/node_exporter
+      src: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-{{ ansible_architecture_mapped }}/node_exporter
       dest: /usr/bin
       mode: 0755
       remote_src: true
@@ -46,7 +46,7 @@
 
   - name: remove temporary directory
     file:
-      path: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-amd64
+      path: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-{{ ansible_architecture_mapped }}
       state: absent
   when: node_exporter_latest is version(node_exporter_current, 'gt')
 
