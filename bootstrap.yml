@@ -10,9 +10,11 @@
 
     - setup:
 
+    - import_role:
+        name: apt_update
+
     - name: full upgrade host
       apt:
-        update_cache: yes
         upgrade: full
       register: apt_full_upgrade
 
