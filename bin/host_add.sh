@@ -24,6 +24,8 @@ fi
 if [ ! -f $host.$domain.yml ]; then
     cat << EOF > $host.$domain.yml
 ---
+- import_playbook: common_roles.yml
+
 - name: $host setup
   hosts: $host.$domain
   become: yes

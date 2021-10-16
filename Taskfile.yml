@@ -15,9 +15,9 @@ tasks:
       - ansible-playbook bootstrap.yml --limit {{.CLI_ARGS}}.{{.DOMAIN}}
 
   host:setup:
-    desc: setup usual roles and declarated roles in host playbook
+    desc: setup common roles and declarated roles in host playbook
     cmds:
-      - ansible-playbook usual_roles.yml {{.CLI_ARGS}}.{{.DOMAIN}}.yml --limit {{.CLI_ARGS}}.{{.DOMAIN}}
+      - ansible-playbook {{.CLI_ARGS}}.{{.DOMAIN}}.yml --limit {{.CLI_ARGS}}.{{.DOMAIN}}
 
   dotfiles:add:
     desc: install dotfiles on a empty home

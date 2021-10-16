@@ -1,5 +1,5 @@
 ---
-- name: usual roles applicable on any host
+- name: roles applicable on any host
   hosts: all
   become: yes
 

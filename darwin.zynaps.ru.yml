@@ -1,4 +1,6 @@
 ---
+- import_playbook: common_roles.yml
+
 - name: darwin setup
   hosts: darwin.zynaps.ru
   become: yes
