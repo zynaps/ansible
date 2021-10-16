@@ -4,6 +4,6 @@
     repo: deb http://deb.debian.org/debian/ buster-backports main
     state: present
 
-- name: download package information
+- name: download packages information
   apt:
     update_cache: yes

@@ -1,5 +1,5 @@
 ---
-- name: create node_exporter user
+- name: create user
   user:
     name: node_exporter
     comment: node_exporter daemon
@@ -23,7 +23,7 @@
     node_exporter_latest: "{{ node_exporter_latest.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1') }}"
     node_exporter_current: "{{ node_exporter_current.stdout|regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') }}"
 
-- name: because node_exporter is not installed
+- name: node_exporter is not installed
   set_fact:
     node_exporter_current: ['0']
   when: node_exporter_current|length == 0
