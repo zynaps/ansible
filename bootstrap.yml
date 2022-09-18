@@ -6,7 +6,8 @@
 
   pre_tasks:
     - name: install python3 packages
-      raw: apt install -y python3-pip python3-apt
+      raw: dpkg-query -l python3-pip python3-apt || (apt update && apt install -y python3-pip python3-apt)
+      changed_when:  false
 
     - setup:
 
