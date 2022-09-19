@@ -1,9 +1,4 @@
 ---
-- name: add buster-backports into sources list
-  apt_repository:
-    repo: deb http://deb.debian.org/debian/ buster-backports main
-    state: present
-
 - name: download packages information
   apt:
     update_cache: yes
