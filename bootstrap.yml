@@ -16,44 +16,28 @@
         msg={{ apt_full_upgrade.stdout + apt_full_upgrade.stderr }}
 
     - block:
+      - name: detect cloned machine
+        set_fact:
+          cloned_machine: yes
+      when: ansible_hostname != inventory_hostname_short
+
+    - block:
       - name: set new hostname
         hostname:
           name: "{{ inventory_hostname_short }}"
-          use: systemd
 
-      - name: editing /etc/hosts file
+      - name: edit /etc/hosts file
         replace:
           path: /etc/hosts
-          regexp: "{{ origin_host }}"
+          regexp: "{{ ansible_hostname }}"
           replace: "{{ inventory_hostname_short }}"
-
-      - name: set new ip address
-        replace:
-          path: /etc/network/interfaces.d/enp0s8
-          regexp: "{{ origin_ip }}"
-          replace: "{{ target_ip }}"
-
-      - name: find sshd host keys
-        find:
-          path: /etc/ssh
-          pattern: 'ssh_host_\w+_key(\.pub)?'
-          use_regex: yes
-        register: files_to_delete
-
-      - name: remove sshd host keys
-        file:
-          path: "{{ item.path }}"
-          state: absent
-        with_items: "{{ files_to_delete.files }}"
 
       - name: regenerate sshd host keys
         command: ssh-keygen -A
 
-      - name: shutdown host
-        command: shutdown -h +1
-
-      - meta: end_host
-      when: origin_host is defined
+      - name: reboot the machine with new defaults
+        reboot:
+      when: cloned_machine is sameas true
 
   roles:
     - users
