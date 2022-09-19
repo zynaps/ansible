@@ -3,25 +3,22 @@
   apt:
     name:
       - curl
-      - dnsutils
       - fping
       - fswatch
       - git
       - htop
       - iperf3
       - jq
-      - man-db
       - ncat
       - nmap
+      - python3-pip
       - rsync
       - socat
       - tcpdump
       - tmux
-      - traceroute
       - tree
       - tshark
       - vim
-      - wget
       - whois
 
 - name: get chezmoi current version info
