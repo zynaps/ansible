@@ -7,7 +7,6 @@
 
   roles:
     - router
-    - docker_registry
     - postfix
     - redis
     - rutor_watch

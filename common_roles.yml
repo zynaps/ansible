@@ -9,5 +9,6 @@
     - vnstat
     - wireguard
     - docker
+    - docker_registry
     - node_exporter
     - users

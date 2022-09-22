@@ -5,4 +5,4 @@
     image: registry
     restart_policy: unless-stopped
     ports:
-      - "{{ wireguard.ip + ':5000:5000/tcp' }}"
+      - "127.0.0.1:5000:5000/tcp"
