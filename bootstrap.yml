@@ -13,7 +13,7 @@
       register: apt_full_upgrade
 
     - debug:
-        msg={{ apt_full_upgrade.stdout + apt_full_upgrade.stderr }}
+        msg={{ (apt_full_upgrade.stdout + apt_full_upgrade.stderr) | split('\n') | select() }}
 
     - block:
       - name: detect cloned machine
