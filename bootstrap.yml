@@ -41,3 +41,4 @@
 
   roles:
     - users
+    - root_lock
