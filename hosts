@@ -1,14 +1,17 @@
 [all]
-darwin
 escape
+darwin
+rookie
 
 [docker]
-darwin
 escape
+darwin
+rookie
 
 [wireguard]
-darwin
 escape
+darwin
+rookie
 
 [wireguard_user]
 shogun
@@ -20,3 +23,4 @@ wireguard_user
 [node_exporter]
 escape
 darwin
+rookie

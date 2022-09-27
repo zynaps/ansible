@@ -1,0 +1,8 @@
+---
+- import_playbook: common_roles.yml
+
+- name: rookie setup
+  hosts: rookie
+  become: yes
+
+  roles:
