@@ -34,10 +34,10 @@
 
       - name: regenerate sshd host keys
         command: ssh-keygen -A
-
-      - name: reboot the machine with new defaults
-        reboot:
       when: cloned_machine is sameas true
+
+    - name: unconditional reboot
+      reboot:
 
   roles:
     - users
