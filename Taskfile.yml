@@ -19,7 +19,7 @@ tasks:
   dotfiles:add:
     desc: install dotfiles on a empty home
     cmds:
-      - ssh {{.CLI_ARGS}} chezmoi init --apply zynaps
+      - ssh {{.CLI_ARGS}} chezmoi init --no-tty --force --apply zynaps
 
   dotfiles:changes:
     desc: see changes without actually applying them
@@ -30,4 +30,4 @@ tasks:
   dotfiles:update:
     desc: updating dotfiles and externals
     cmds:
-      - ssh {{.CLI_ARGS}} chezmoi update --refresh-externals
+      - ssh {{.CLI_ARGS}} chezmoi update --no-tty --force --refresh-externals
