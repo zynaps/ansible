@@ -20,7 +20,6 @@
     src: templates/wg0.conf.j2
     mode: 0600
   notify: restart wireguard
-  no_log: true
 
 - name: enable and start service
   systemd:
