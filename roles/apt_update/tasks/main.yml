@@ -1,4 +1,0 @@
----
-- name: download packages information
-  apt:
-    update_cache: yes

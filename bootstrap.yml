@@ -3,22 +3,10 @@
   hosts: all
   user: root
 
-  pre_tasks:
-    - import_role:
-        name: apt_update
-
-    - name: full upgrade host
-      apt:
-        upgrade: full
-      register: apt_full_upgrade
-
-    - debug:
-        msg={{ (apt_full_upgrade.stdout + apt_full_upgrade.stderr) | split('\n') | select() }}
-
-    - block:
-      - name: detect cloned machine
-        set_fact:
-          cloned_machine: yes
+  tasks:
+    - name: check if system was cloned
+      set_fact:
+        system_cloned: yes
       when: ansible_hostname != inventory_hostname_short
 
     - block:
@@ -32,13 +20,22 @@
           regexp: "{{ ansible_hostname }}"
           replace: "{{ inventory_hostname_short }}"
 
-      - name: regenerate sshd host keys
+      - name: list current sshd keys
+        find:
+          paths: /etc/ssh
+          patterns: ssh_host_*_key*
+        register: sshd_keys
+
+      - name: delete current sshd keys
+        file:
+          path: "{{ item }}"
+          state: absent
+        with_items: "{{ sshd_keys.files|map(attribute='path')|sort }}"
+
+      - name: regenerate sshd keys
         command: ssh-keygen -A
-      when: cloned_machine is sameas true
+        changed_when: yes
+      when: system_cloned is sameas true
 
-    - name: unconditional reboot
-      reboot:
-
-  roles:
-    - users
-    - root_lock
+    - import_role:
+        name: users
