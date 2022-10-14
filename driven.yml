@@ -1,0 +1,8 @@
+---
+- import_playbook: common_roles.yml
+
+- name: driven setup
+  hosts: driven
+  become: yes
+
+  roles:
