@@ -29,8 +29,8 @@
     name: "{{ item.name }}"
     comment: "{{ item.comment }}"
     uid: "{{ item.uid }}"
-    groups: "{{ item.groups | default('') }}"
-    shell: "{{ item.shell | default('/bin/bash') }}"
+    groups: "{{ item.groups|default('') }}"
+    shell: "{{ item.shell|default('/bin/bash') }}"
     state: "{{ item.state }}"
     remove: yes
   with_items:
