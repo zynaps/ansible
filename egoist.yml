@@ -1,8 +1,0 @@
----
-- import_playbook: common_roles.yml
-
-- name: egoist setup
-  hosts: egoist
-  become: yes
-
-  roles:

@@ -1,8 +1,8 @@
 ---
 - import_playbook: common_roles.yml
 
-- name: master setup
-  hosts: master
+- name: escape setup
+  hosts: escape
   become: yes
 
   roles:
