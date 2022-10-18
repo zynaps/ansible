@@ -1,0 +1,43 @@
+---
+- name: create directories
+  file:
+    path: "{{ '/srv/grafana/' + item }}"
+    state: directory
+  with_items:
+    - lib/dashboards
+    - etc/provisioning/datasources
+    - etc/provisioning/dashboards
+
+- name: add datasources config
+  copy:
+    src: files/datasources.yml
+    dest: /srv/grafana/etc/provisioning/datasources/default.yaml
+  notify: restart grafana
+
+- name: download dashboards
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ '/srv/grafana/lib/dashboards/' + item.dest }}"
+  with_items:
+    - { dest: 'node_exporter.json', url: 'https://grafana.com/api/dashboards/1860/revisions/27/download' }
+  notify: restart grafana
+
+- name: add dashboards config
+  copy:
+    src: files/dashboards.yml
+    dest: /srv/grafana/etc/provisioning/dashboards/default.yaml
+  notify: restart grafana
+
+- name: start container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    restart_policy: unless-stopped
+    user: root
+    ports:
+      - "{{ wireguard.ip + ':3000:3000/tcp' }}"
+    volumes:
+      - "/srv/grafana/etc/provisioning:/etc/grafana/provisioning"
+      - "/srv/grafana/lib:/var/lib/grafana"
+
+- meta: flush_handlers

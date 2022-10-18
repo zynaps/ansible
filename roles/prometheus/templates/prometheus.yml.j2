@@ -1,0 +1,19 @@
+#jinja2: lstrip_blocks: True, trim_blocks: True
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 5s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  - job_name: "node_exporter"
+    static_configs:
+    {% for host in groups.node_exporter %}
+      - targets: ["{{ hostvars[host].wireguard.ip + ':9100' }}"]
+        labels:
+          hostname: "{{ host }}"
+    {% endfor %}

@@ -1,0 +1,28 @@
+---
+- name: create directories
+  file:
+    path: "{{ '/srv/prometheus/' + item }}"
+    state: directory
+  with_items:
+    - etc
+    - data
+
+- name: add config
+  template:
+    src: templates/prometheus.yml.j2
+    dest: /srv/prometheus/etc/prometheus.yml
+  notify: restart prometheus
+
+- name: start container
+  docker_container:
+    name: prometheus
+    image: prom/prometheus
+    restart_policy: unless-stopped
+    user: root
+    ports:
+      - "{{ wireguard.ip + ':9090:9090/tcp' }}"
+    volumes:
+      - "/srv/prometheus/etc/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "/srv/prometheus/data:/prometheus"
+
+- meta: flush_handlers
