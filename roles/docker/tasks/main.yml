@@ -23,17 +23,10 @@
     name:
       'docker'
 
-- name: add base config
-  copy:
-    content: |
-      {
-        "log-driver": "json-file",
-        "log-opts": {
-          "max-file": "3",
-          "max-size": "32m"
-        }
-      }
+- name: add config
+  template:
     dest: /etc/docker/daemon.json
+    src: templates/daemon.json.j2
     mode: 0600
   notify: restart docker
 
