@@ -11,3 +11,4 @@ wireguard:
           3366663937333265653763393064376438316637356166373234
   public_key: eFXB+IwDjB0tix+xNgli7kQhkYLPGOG1/oiN9QxrNBE=
   endpoint: 94.103.86.197:51820
+  exit_node: yes

@@ -11,3 +11,4 @@ wireguard:
           6565353537336463643439343434353737326137376261613030
   public_key: pz6aa/EO0zXfc9NvKmT0fNF70Lwch4C5I0nRGiHfB2Y=
   endpoint: 192.168.64.1:51820
+  default_gateway: escape

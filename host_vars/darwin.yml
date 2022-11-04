@@ -11,3 +11,4 @@ wireguard:
           3235663361373939326164656162366233373764623133656266
   public_key: U/1uDFXd3ObvwTwfjJ7E5fGZ8hD21i3NGtQoO1eOQHI=
   endpoint: 192.168.64.13:51820
+  default_gateway: escape
