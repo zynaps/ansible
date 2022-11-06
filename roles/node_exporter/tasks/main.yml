@@ -8,24 +8,24 @@
     shell: /usr/sbin/nologin
     state: present
 
-- name: get node_exporter current version info
+- name: get current version info
   command: node_exporter --version
   register: node_exporter_current
   changed_when: no
   failed_when: no
 
-- name: get node_exporter latest version info
+- name: get latest version info
   uri:
     url: https://api.github.com/repos/prometheus/node_exporter/releases/latest
   register: node_exporter_latest
   failed_when: no
 
-- name: extract node_exporter current and latest versions
+- name: extract current and latest versions
   set_fact:
     node_exporter_latest: "{{ node_exporter_latest.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1') }}"
     node_exporter_current: "{{ node_exporter_current.stdout|regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') }}"
 
-- name: node_exporter is not installed
+- name: is not installed
   set_fact:
     node_exporter_current: ['0']
   when: node_exporter_current|length == 0
