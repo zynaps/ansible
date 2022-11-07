@@ -5,7 +5,7 @@ wireguard_endpoint_ip=$2
 wireguard_ip=$3
 
 if [ ! -f host_vars/$hostname.yml ]; then
-    public_key=`wg genkey | tee $hostname.key | wg pubkey`
+    public_key=`wg genkey | tr -d '\n' | tee $hostname.key | wg pubkey`
     private_key=`ansible-vault encrypt_string --vault-password-file ./.vault_password --encrypt-vault-id default --output - < $hostname.key`
     rm -f $hostname.key
 
