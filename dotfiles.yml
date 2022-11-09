@@ -1,0 +1,37 @@
+---
+- name: manage dotfiles
+  hosts: all
+
+  tasks:
+    - name: get chezmoi current version info
+      command: chezmoi --version
+      register: chezmoi_current_info
+      changed_when: no
+      failed_when: no
+
+    - name: chezmoi is not installed
+      set_fact:
+        chezmoi_current: '0.0'
+      when: chezmoi_current_info.rc == 2
+
+    - name: extract chezmoi current version
+      set_fact:
+        chezmoi_current: "{{ chezmoi_current_info.stdout|regex_search('version v([\\d\\.]+),', '\\1')|first }}"
+      when: chezmoi_current_info.rc == 0
+
+    - name: get chezmoi latest version info
+      uri:
+        url: https://api.github.com/repos/twpayne/chezmoi/releases/latest
+      register: chezmoi_latest_info
+      changed_when: no
+      failed_when: no
+
+    - name: extract chezmoi latest version
+      set_fact:
+        chezmoi_latest: "{{ chezmoi_latest_info.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1')|first }}"
+
+    - name: install chezmoi
+      become: yes
+      apt:
+        deb: "https://github.com/twpayne/chezmoi/releases/download/v{{ chezmoi_latest }}/chezmoi_{{ chezmoi_latest }}_linux_{{ ansible_architecture_mapped }}.deb"
+      when: chezmoi_latest is version(chezmoi_current, 'gt')
