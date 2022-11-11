@@ -3,6 +3,41 @@
   hosts: all
 
   tasks:
+    - name: get starship current version info
+      command: starship --version
+      register: starship_current_info
+      changed_when: no
+      failed_when: no
+
+    - name: starship is not installed
+      set_fact:
+        starship_current: '0.0'
+      when: starship_current_info.rc == 2
+
+    - name: extract starship current version
+      set_fact:
+        starship_current: "{{ starship_current_info.stdout|regex_search('starship ([\\d\\.]+)', '\\1')|first }}"
+      when: starship_current_info.rc == 0
+
+    - name: get starship latest version info
+      uri:
+        url: https://api.github.com/repos/starship/starship/releases/latest
+      register: starship_latest_info
+      changed_when: no
+      failed_when: no
+
+    - name: extract starship latest version
+      set_fact:
+        starship_latest: "{{ starship_latest_info.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1')|first }}"
+
+    - name: install starship
+      become: yes
+      unarchive:
+        dest: /usr/bin
+        src: "https://github.com/starship/starship/releases/download/v{{ starship_latest }}/starship-{{ ansible_architecture }}-unknown-linux-musl.tar.gz"
+        remote_src: yes
+      when: starship_latest is version(starship_current, 'gt')
+
     - name: get chezmoi current version info
       command: chezmoi --version
       register: chezmoi_current_info
