@@ -1,23 +1,39 @@
 ---
+- name: create user
+  user:
+    name: plex
+    comment: plex media server
+    create_home: no
+    system: yes
+    home: /srv/plex
+    shell: /usr/sbin/nologin
+    state: present
+  register: plex_user
+
 - name: create directories
   file:
     path: "{{ '/srv/plex/' + item }}"
+    owner: plex
+    group: plex
+    mode: 0775
     state: directory
   with_items:
-    - config
-    - media/movies
-    - media/music
-    - media/photos
-    - media/shows
+    - etc
+    - data/movies
+    - data/music
+    - data/photos
+    - data/shows
 
 - name: start container
   docker_container:
     name: plex
-    image: wernight/plex-media-server
+    image: plexinc/pms-docker
     restart_policy: unless-stopped
-    user: root
+    env:
+      PLEX_UID: "{{ plex_user.uid }}"
+      PLEX_GID: "{{ plex_user.group }}"
     ports:
       - "32400:32400/tcp"
     volumes:
-      - "/srv/plex/config:/config"
-      - "/srv/plex/media:/media"
+      - "/srv/plex/etc:/config"
+      - "/srv/plex/data:/data"
