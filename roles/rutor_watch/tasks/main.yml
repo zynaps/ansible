@@ -21,4 +21,4 @@
     image: "{{ docker.registry + '/' + 'rutor_watch' }}"
     restart_policy: unless-stopped
     env:
-      REDIS_URL: "{{ 'redis://' + hostvars['escape'].wireguard.ip + ':6379' }}"
+      REDIS_URL: "redis://redis:6379"
