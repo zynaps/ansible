@@ -8,3 +8,7 @@
   roles:
     - prometheus
     - grafana
+    - redis
+    - rutor_watch
+    - feeder
+    - traefik
