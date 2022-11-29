@@ -1,0 +1,26 @@
+log:
+  level: DEBUG
+
+entrypoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: :443
+
+certificatesresolvers:
+  letsencrypt:
+    acme:
+      email: zynaps@zynaps.ru
+      storage: /etc/traefik/acme.json
+      httpchallenge:
+        entryPoint: web
+
+providers:
+  docker:
+    exposedbydefault: false

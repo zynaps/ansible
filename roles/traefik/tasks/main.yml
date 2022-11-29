@@ -1,0 +1,25 @@
+---
+- name: create directory
+  file:
+    path: /srv/traefik/etc
+    state: directory
+
+- name: add config
+  copy:
+    dest: /srv/traefik/etc/traefik.yml
+    src: files/traefik.yml
+  notify: restart traefik
+
+- name: start container
+  docker_container:
+    name: traefik
+    image: traefik
+    restart_policy: unless-stopped
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+    volumes:
+      - "/srv/traefik/etc:/etc/traefik"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+- meta: flush_handlers
