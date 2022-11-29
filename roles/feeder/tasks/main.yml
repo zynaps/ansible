@@ -20,15 +20,10 @@
     name: feeder
     image: "{{ docker.registry + '/' + 'feeder' }}"
     restart_policy: unless-stopped
-    ports:
-      - "{{ wireguard.ip + ':4567:4567/tcp' }}"
+    labels:
+      traefik.enable=true
+      traefik.http.routers.feeder.rule=Host(`feeder.zynaps.ru`)
+      traefik.http.routers.feeder.tls=true
+      traefik.http.routers.feeder.tls.certresolver=letsencrypt
     env:
-      REDIS_URL: "{{ 'redis://' + hostvars['escape'].wireguard.ip + ':6379' }}"
-
-- name: add nginx config
-  template:
-    dest: /srv/nginx/sites.d/feeder.conf
-    src: templates/nginx.conf.j2
-  notify: reload nginx
-
-- meta: flush_handlers
+      REDIS_URL: "redis://redis:6379"
