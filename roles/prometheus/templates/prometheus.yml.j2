@@ -17,3 +17,11 @@ scrape_configs:
         labels:
           hostname: "{{ host }}"
     {% endfor %}
+
+  - job_name: "traefik"
+    static_configs:
+    {% for host in groups.traefik %}
+      - targets: ["{{ hostvars[host].wireguard.ip + ':9982' }}"]
+        labels:
+          hostname: "{{ host }}"
+    {% endfor %}

@@ -9,9 +9,14 @@ entrypoints:
         entrypoint:
           to: websecure
           scheme: https
-
   websecure:
     address: :443
+  metrics:
+    address: :9982
+
+metrics:
+  prometheus:
+    entryPoint: metrics
 
 certificatesresolvers:
   letsencrypt:
