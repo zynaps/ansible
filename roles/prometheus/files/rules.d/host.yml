@@ -1,0 +1,11 @@
+groups:
+  - name: host
+    rules:
+      - alert: HostDown
+        expr: up{job="node_exporter"} == 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: Host down (instance {{ $labels.instance }})
+          description: "Host is down\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

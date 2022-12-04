@@ -1,0 +1,28 @@
+---
+- name: create directories
+  file:
+    path: "{{ '/srv/alertmanager/' + item }}"
+    state: directory
+  with_items:
+    - etc
+    - data
+
+- name: add config
+  template:
+    dest: /srv/alertmanager/etc/alertmanager.yml
+    src: templates/alertmanager.yml.j2
+  notify: restart alertmanager
+
+- name: start container
+  docker_container:
+    name: alertmanager
+    image: prom/alertmanager
+    restart_policy: unless-stopped
+    user: root
+    ports:
+      - "{{ wireguard.ip + ':9093:9093/tcp' }}"
+    volumes:
+      - "/srv/alertmanager/etc/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
+      - "/srv/alertmanager/data:/alertmanager"
+
+- meta: flush_handlers

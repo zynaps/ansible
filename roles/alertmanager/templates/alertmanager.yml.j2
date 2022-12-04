@@ -1,0 +1,16 @@
+#jinja2: lstrip_blocks: True, trim_blocks: True
+
+route:
+  group_wait: 30s
+  group_interval: 1m
+  repeat_interval: 3h
+  receiver: telegram
+
+receivers:
+  - name: telegram
+    telegram_configs:
+      - api_url: https://api.telegram.org
+        bot_token: {{ alertmanager.bot_token }}
+        chat_id: {{ alertmanager.chat_id }}
+        parse_mode: HTML
+        message: {% raw %}'{{ template "telegram.default.message" .}}'{% endraw %}
