@@ -37,5 +37,26 @@
         changed_when: yes
       when: system_cloned is sameas true
 
+    - name: disable ipv6
+      sysctl:
+        name: net.ipv6.conf.all.disable_ipv6
+        value: '1'
+        sysctl_file: /etc/sysctl.d/90-disable_ipv6.conf
+        sysctl_set: yes
+
+    - name: disable ipv6 especially for sshd
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#AddressFamily any$"
+        line: "AddressFamily inet"
+        state: present
+      notify: reload sshd
+
     - import_role:
         name: users
+
+  handlers:
+    - name: reload sshd
+      systemd:
+        name: ssh
+        state: reloaded
