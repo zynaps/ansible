@@ -3,7 +3,7 @@
   file:
     path: "{{ '/srv/grafana/' + item }}"
     state: directory
-  with_items:
+  loop:
     - lib/dashboards
     - etc/provisioning/datasources
     - etc/provisioning/dashboards
@@ -18,7 +18,7 @@
   get_url:
     url: "{{ item.url }}"
     dest: "{{ '/srv/grafana/lib/dashboards/' + item.dest }}"
-  with_items:
+  loop:
     - { dest: 'node_exporter.json', url: 'https://grafana.com/api/dashboards/1860/revisions/27/download' }
   notify: restart grafana
 

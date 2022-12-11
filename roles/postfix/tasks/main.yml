@@ -19,7 +19,7 @@
   file:
     path: "{{ '/srv/postfix/' + item }}"
     state: directory
-  with_items:
+  loop:
     - config
     - spool
 

@@ -19,7 +19,7 @@
   file:
     path: "{{ '/srv/transmission/' + item }}"
     state: directory
-  with_items:
+  loop:
     - watch
     - incomplete
     - complete
@@ -33,11 +33,11 @@
   sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
-    sysctl_file: "{{ '/etc/sysctl.d/' + item.file }}"
+    sysctl_file: "{{ '/etc/sysctl.d/90-' + item.name|split('.')|last + '.conf' }}"
     sysctl_set: yes
-  with_items:
-    - { name: 'net.core.rmem_max', value: '4194304', file: '94-rmem_max' }
-    - { name: 'net.core.wmem_max', value: '1048576', file: '95-wmem_max' }
+  loop:
+    - { name: 'net.core.rmem_max', value: '4194304' }
+    - { name: 'net.core.wmem_max', value: '1048576' }
 
 - name: start container
   docker_container:

@@ -17,7 +17,7 @@
     group: plex
     mode: 0775
     state: directory
-  with_items:
+  loop:
     - etc
     - data/movies
     - data/music

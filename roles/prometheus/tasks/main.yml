@@ -3,7 +3,7 @@
   file:
     path: "{{ '/srv/prometheus/' + item }}"
     state: directory
-  with_items:
+  loop:
     - etc
     - data
 

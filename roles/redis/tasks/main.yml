@@ -1,14 +1,14 @@
 ---
 - name: tuning kernel parameters
   sysctl:
-    name: "{{ item.name }}"
+    name: "{{ item.key }}"
     value: "{{ item.value }}"
-    sysctl_file: "{{ '/etc/sysctl.d/' + item.file }}"
+    sysctl_file: "{{ '/etc/sysctl.d/90-' + item.key|split('.')|last + '.conf' }}"
     sysctl_set: yes
-  with_items:
-    - { name: 'vm.overcommit_memory', value: '1', file: '91-overcommit.conf' }
-    - { name: 'net.ipv4.tcp_max_syn_backlog', value: '512', file: '92-tcp_max_syn_backlog.conf' }
-    - { name: 'net.core.somaxconn', value: '512', file: '93-somaxconn.conf' }
+  loop:
+    - { key: 'vm.overcommit_memory', value: '1' }
+    - { key: 'net.ipv4.tcp_max_syn_backlog', value: '512' }
+    - { key: 'net.core.somaxconn', value: '512' }
 
 - name: create data directory
   file:

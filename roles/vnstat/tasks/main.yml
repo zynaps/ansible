@@ -8,11 +8,11 @@
     dest: /etc/vnstat.conf
     regexp: "^#? *{{ item.key|regex_escape() }} "
     line: "{{ item.key }} {{ item.value }}"
-  with_dict:
-    'MonthFormat': '"%b %Y"'
-    'UnitMode': 1
-    'HourlyDecimals': 2
-    'MaxBandwidth': 0
+  loop:
+    - { key: 'MonthFormat', value: '"%b %Y"' }
+    - { key: 'UnitMode', value: '1' }
+    - { key: 'HourlyDecimals', value: '2' }
+    - { key: 'MaxBandwidth', value: '0' }
   notify: restart vnstat
 
 - meta: flush_handlers
