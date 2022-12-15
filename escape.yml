@@ -1,5 +1,5 @@
 ---
-- import_playbook: common_roles.yml
+- import_playbook: bootstrap.yml
 
 - name: escape setup
   hosts: escape

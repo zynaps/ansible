@@ -11,7 +11,7 @@ $ task host:add -- <wireguard ip> <wireguard endpoint ip> <hostname>
 On a freshly installed Debian with your key in /root/.ssh/authorized_keys:
 
 ```console
-$ task host:bootstrap host:setup user:dotfiles -- <hostname>
+$ task host:setup user:dotfiles -- <hostname>
 ```
 
 #### Update

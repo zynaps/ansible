@@ -3,7 +3,7 @@
   hosts: all
   user: root
 
-  tasks:
+  pre_tasks:
     - name: check if system was cloned
       set_fact:
         system_cloned: yes
@@ -52,11 +52,25 @@
         state: present
       notify: reload sshd
 
-    - import_role:
-        name: users
+    - meta: flush_handlers
+
+  roles:
+    - users
 
   handlers:
     - name: reload sshd
       systemd:
         name: ssh
         state: reloaded
+
+- name: common hosts roles
+  hosts: all
+  become: yes
+
+  roles:
+    - common_packages
+    - vnstat
+    - wireguard
+    - docker
+    - docker_registry
+    - node_exporter

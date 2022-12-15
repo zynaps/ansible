@@ -22,7 +22,7 @@ fi
 if [ ! -f $hostname.yml ]; then
     cat << EOF > $hostname.yml
 ---
-- import_playbook: common_roles.yml
+- import_playbook: bootstrap.yml
 
 - name: $hostname setup
   hosts: $hostname

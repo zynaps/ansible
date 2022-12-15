@@ -6,11 +6,6 @@ tasks:
     cmds:
       - bin/host_add.sh {{.CLI_ARGS}}
 
-  host:bootstrap:
-    desc: install python with necessary libs, full upgrade host, add users
-    cmds:
-      - ansible-playbook bootstrap.yml --limit {{.CLI_ARGS}}
-
   host:setup:
     desc: setup common roles and declarated roles in host playbook
     cmds:
