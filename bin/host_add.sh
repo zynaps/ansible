@@ -1,8 +1,8 @@
 #!/bin/sh
 
-hostname=$1
+hostname=$3
 wireguard_endpoint_ip=$2
-wireguard_ip=$3
+wireguard_ip=$1
 
 if [ ! -f host_vars/$hostname.yml ]; then
     public_key=`wg genkey | tr -d '\n' | tee $hostname.key | wg pubkey`
