@@ -44,12 +44,20 @@
         sysctl_file: /etc/sysctl.d/90-disable_ipv6.conf
         sysctl_set: yes
 
-    - name: disable ipv6 especially for sshd
+    - name: apply sshd system-wide settings
       lineinfile:
         path: /etc/ssh/sshd_config
-        regexp: "^#AddressFamily any$"
-        line: "AddressFamily inet"
-        state: present
+        regexp: "^#?\\s*{{ item.key }}\\s+"
+        line: "{{ item.key }} {{ item.value }}"
+      loop:
+        - { key: 'AddressFamily', value: 'inet' }
+        - { key: 'ClientAliveInterval', value: '16' }
+        - { key: 'ClientAliveCountMax', value: '16' }
+        - { key: 'TCPKeepAlive', value: 'no' }
+        - { key: 'PermitEmptyPasswords', value: 'no' }
+        - { key: 'PasswordAuthentication', value: 'no' }
+        - { key: 'ChallengeResponseAuthentication', value: 'no' }
+        - { key: 'PubkeyAuthentication', value: 'yes' }
       notify: reload sshd
 
     - meta: flush_handlers
