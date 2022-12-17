@@ -19,7 +19,7 @@
     dest: /etc/wireguard/wg0.conf
     src: templates/wg0.conf.j2
     mode: 0600
-  notify: restart wireguard
+  notify: reload wireguard
 
 - name: enable and start service
   systemd:

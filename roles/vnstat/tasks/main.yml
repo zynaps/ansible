@@ -13,6 +13,6 @@
     - { key: 'UnitMode', value: '1' }
     - { key: 'HourlyDecimals', value: '2' }
     - { key: 'MaxBandwidth', value: '0' }
-  notify: restart vnstat
+  notify: reload vnstat
 
 - meta: flush_handlers
