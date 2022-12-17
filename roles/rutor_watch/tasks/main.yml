@@ -4,7 +4,7 @@
     repo: https://github.com/zynaps/rutor_watch.git
     dest: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
 
-- name: build and push container
+- name: build and push image
   docker_image:
     build:
       path: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
