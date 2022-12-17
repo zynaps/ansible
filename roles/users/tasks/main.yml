@@ -1,15 +1,4 @@
 ---
-- name: add sensitive files to skeleton
-  file:
-    path: "{{ '/etc/skel/' + item }}"
-    state: touch
-    mode: 0600
-    modification_time: preserve
-    access_time: preserve
-  loop:
-    - .lesshst
-    - .viminfo
-
 - name: install sudo and popular shells
   apt:
     name:

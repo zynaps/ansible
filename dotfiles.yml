@@ -3,6 +3,18 @@
   hosts: all
 
   tasks:
+    - name: preserve sensitive files
+      file:
+        path: "{{ item }}"
+        state: touch
+        mode: 0600
+        modification_time: preserve
+        access_time: preserve
+      loop:
+        - .lesshst
+        - .viminfo
+        - .z
+
     - name: get starship current version info
       command: starship --version
       register: starship_current_info
