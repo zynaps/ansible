@@ -6,7 +6,7 @@
 - name: configure
   lineinfile:
     dest: /etc/vnstat.conf
-    regexp: "^#? *{{ item.key|regex_escape() }} "
+    regexp: "^#?\\s*{{ item.key|regex_escape() }}\\s+"
     line: "{{ item.key }} {{ item.value }}"
   loop:
     - { key: 'MonthFormat', value: '"%b %Y"' }
