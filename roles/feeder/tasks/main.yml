@@ -26,4 +26,4 @@
       traefik.http.routers.feeder.tls=true
       traefik.http.routers.feeder.tls.certresolver=letsencrypt
     env:
-      REDIS_URL: "redis://redis:6379"
+      REDIS_URL: "redis://redis.wg0.zynaps.ru:6379"

@@ -4,7 +4,7 @@ datasources:
   - name: prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus:9090
+    url: http://prometheus.wg0.zynaps.ru:9090
     isDefault: true
     version: 1
     editable: false
