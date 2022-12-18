@@ -9,7 +9,7 @@
     build:
       path: "{{ ansible_env.HOME + '/' + 'postfix' }}"
       pull: no
-    name: "{{ docker.registry + '/' + 'postfix' }}"
+    name: "{{ docker_registry + '/' + 'postfix' }}"
     push: yes
     source: build
     force_source: yes
@@ -33,7 +33,7 @@
 - name: start container
   docker_container:
     name: postfix
-    image: "{{ docker.registry + '/' + 'postfix' }}"
+    image: "{{ docker_registry + '/' + 'postfix' }}"
     pull: yes
     restart_policy: unless-stopped
     ports:

@@ -3,7 +3,7 @@ Description=Node Exporter
 
 [Service]
 User=node_exporter
-ExecStart=/usr/bin/node_exporter --web.listen-address={{ wireguard.ip }}:9100
+ExecStart=/usr/bin/node_exporter --web.listen-address={{ wireguard_ip }}:9100
 
 [Install]
 WantedBy=multi-user.target

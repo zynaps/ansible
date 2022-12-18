@@ -35,7 +35,7 @@
     restart_policy: unless-stopped
     user: root
     ports:
-      - "{{ wireguard.ip + ':3000:3000/tcp' }}"
+      - "{{ wireguard_ip + ':3000:3000/tcp' }}"
     volumes:
       - "/srv/grafana/etc/provisioning:/etc/grafana/provisioning"
       - "/srv/grafana/lib:/var/lib/grafana"

@@ -11,11 +11,10 @@ if [ ! -f host_vars/$hostname.yml ]; then
 
     cat << EOF > host_vars/$hostname.yml
 ---
-wireguard:
-  ip: $wireguard_ip
-  private_key: $private_key
-  public_key: $public_key
-  endpoint: $wireguard_endpoint_ip:51820
+wireguard_ip: $wireguard_ip
+wireguard_private_key: $private_key
+wireguard_public_key: $public_key
+wireguard_endpoint: $wireguard_endpoint_ip:51820
 EOF
 fi
 

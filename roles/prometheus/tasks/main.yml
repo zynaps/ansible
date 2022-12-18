@@ -27,7 +27,7 @@
     hostname: prometheus
     user: root
     ports:
-      - "{{ wireguard.ip + ':9090:9090/tcp' }}"
+      - "{{ wireguard_ip + ':9090:9090/tcp' }}"
     volumes:
       - "/srv/prometheus/etc/rules.d:/etc/prometheus/rules.d"
       - "/srv/prometheus/etc/prometheus.yml:/etc/prometheus/prometheus.yml"

@@ -9,7 +9,7 @@
     build:
       path: "{{ ansible_env.HOME + '/' + 'nginx' }}"
       pull: no
-    name: "{{ docker.registry + '/' + 'nginx' }}"
+    name: "{{ docker_registry + '/' + 'nginx' }}"
     push: yes
     source: build
     force_source: yes
@@ -23,7 +23,7 @@
 - name: start container
   docker_container:
     name: nginx
-    image: "{{ docker.registry + '/' + 'nginx' }}"
+    image: "{{ docker_registry + '/' + 'nginx' }}"
     restart_policy: unless-stopped
     ports:
       - "80:80/tcp"

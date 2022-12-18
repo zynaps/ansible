@@ -21,7 +21,7 @@ scrape_configs:
   - job_name: "node_exporter"
     static_configs:
     {% for host in groups.node_exporter %}
-      - targets: ["{{ hostvars[host].wireguard.ip + ':9100' }}"]
+      - targets: ["{{ hostvars[host].wireguard_ip + ':9100' }}"]
         labels:
           hostname: "{{ host }}"
     {% endfor %}
@@ -29,7 +29,7 @@ scrape_configs:
   - job_name: "traefik"
     static_configs:
     {% for host in groups.traefik %}
-      - targets: ["{{ hostvars[host].wireguard.ip + ':9982' }}"]
+      - targets: ["{{ hostvars[host].wireguard_ip + ':9982' }}"]
         labels:
           hostname: "{{ host }}"
     {% endfor %}

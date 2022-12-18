@@ -1,3 +1,2 @@
 ---
-wireguard:
-  network: 192.168.89.0/24
+wireguard_network: 192.168.89.0/24

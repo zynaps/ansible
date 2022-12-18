@@ -9,7 +9,7 @@
     build:
       path: "{{ ansible_env.HOME + '/' + 'feeder' }}"
       pull: no
-    name: "{{ docker.registry + '/' + 'feeder' }}"
+    name: "{{ docker_registry + '/' + 'feeder' }}"
     push: yes
     source: build
     force_source: yes
@@ -18,7 +18,7 @@
 - name: start container
   docker_container:
     name: feeder
-    image: "{{ docker.registry + '/' + 'feeder' }}"
+    image: "{{ docker_registry + '/' + 'feeder' }}"
     restart_policy: unless-stopped
     labels:
       traefik.enable=true

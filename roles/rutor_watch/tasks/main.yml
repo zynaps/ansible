@@ -9,7 +9,7 @@
     build:
       path: "{{ ansible_env.HOME + '/' + 'rutor_watch' }}"
       pull: no
-    name: "{{ docker.registry + '/' + 'rutor_watch' }}"
+    name: "{{ docker_registry + '/' + 'rutor_watch' }}"
     push: yes
     source: build
     force_source: yes
@@ -18,7 +18,7 @@
 - name: start container
   docker_container:
     name: rutor_watch
-    image: "{{ docker.registry + '/' + 'rutor_watch' }}"
+    image: "{{ docker_registry + '/' + 'rutor_watch' }}"
     restart_policy: unless-stopped
     env:
       REDIS_URL: "redis://redis.wg0.zynaps.ru:6379"

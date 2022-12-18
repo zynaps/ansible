@@ -22,6 +22,6 @@
     command: redis-server --appendonly yes
     restart_policy: unless-stopped
     ports:
-      - "{{ wireguard.ip + ':6379:6379/tcp' }}"
+      - "{{ wireguard_ip + ':6379:6379/tcp' }}"
     volumes:
       - "/srv/redis/data:/data"

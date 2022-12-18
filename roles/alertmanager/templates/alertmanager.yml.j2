@@ -10,7 +10,7 @@ receivers:
   - name: telegram
     telegram_configs:
       - api_url: https://api.telegram.org
-        bot_token: {{ alertmanager.bot_token }}
-        chat_id: {{ alertmanager.chat_id }}
+        bot_token: {{ alertmanager_bot_token }}
+        chat_id: {{ alertmanager_chat_id }}
         parse_mode: HTML
         message: {% raw %}'{{ template "telegram.default.message" .}}'{% endraw %}

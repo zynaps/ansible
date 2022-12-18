@@ -20,7 +20,7 @@
     restart_policy: unless-stopped
     user: root
     ports:
-      - "{{ wireguard.ip + ':9093:9093/tcp' }}"
+      - "{{ wireguard_ip + ':9093:9093/tcp' }}"
     volumes:
       - "/srv/alertmanager/etc/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
       - "/srv/alertmanager/data:/alertmanager"

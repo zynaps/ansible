@@ -18,7 +18,7 @@
     ports:
       - "80:80/tcp"
       - "443:443/tcp"
-      - "{{ wireguard.ip + ':9982:9982/tcp' }}"
+      - "{{ wireguard_ip + ':9982:9982/tcp' }}"
     volumes:
       - "/srv/traefik/etc:/etc/traefik"
       - "/var/run/docker.sock:/var/run/docker.sock"
