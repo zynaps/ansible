@@ -54,10 +54,7 @@
         - { key: 'ClientAliveInterval', value: '16' }
         - { key: 'ClientAliveCountMax', value: '16' }
         - { key: 'TCPKeepAlive', value: 'no' }
-        - { key: 'PermitEmptyPasswords', value: 'no' }
         - { key: 'PasswordAuthentication', value: 'no' }
-        - { key: 'ChallengeResponseAuthentication', value: 'no' }
-        - { key: 'PubkeyAuthentication', value: 'yes' }
       notify: reload sshd
 
     - meta: flush_handlers
