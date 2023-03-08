@@ -78,4 +78,3 @@
     - wireguard
     - docker
     - docker_registry
-    - node_exporter
