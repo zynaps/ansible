@@ -1,8 +1,0 @@
----
-- import_playbook: bootstrap.yml
-
-- name: garden setup
-  hosts: garden
-  become: yes
-
-  roles:
