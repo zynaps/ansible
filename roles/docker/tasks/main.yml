@@ -1,5 +1,5 @@
 ---
-- name: add install prerequisites
+- name: install prerequisites
   apt:
     name:
       - apt-transport-https
