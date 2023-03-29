@@ -1,0 +1,19 @@
+---
+- name: install prerequisites
+  apt:
+    name:
+      - apt-transport-https
+      - software-properties-common
+
+- name: add GPG key
+  apt_key:
+    id: 798AEC654E5C15428C8E42EEAA16FCBCA621E701
+    url: https://apt.releases.hashicorp.com/gpg
+
+- name: add repository
+  apt_repository:
+    repo: deb [arch={{ ansible_architecture_mapped }}] https://apt.releases.hashicorp.com focal main
+
+- name: install
+  apt:
+    name: terraform
