@@ -3,7 +3,7 @@
 #### Add host common playbook and wireguard variables
 
 ```console
-$ task host:add -- <wireguard ip> <wireguard endpoint ip> <hostname>
+$ task host:add -- <hostname> <wireguard ip> [wireguard endpoint ip]
 ```
 
 #### Setup

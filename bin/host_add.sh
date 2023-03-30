@@ -1,8 +1,8 @@
 #!/bin/sh
 
-hostname=$3
-wireguard_endpoint_ip=$2
-wireguard_ip=$1
+hostname=$1
+wireguard_ip=$2
+wireguard_endpoint_ip=$3
 
 if [ ! -f host_vars/$hostname.yml ]; then
     public_key=`wg genkey | tr -d '\n' | tee $hostname.key | wg pubkey`
@@ -14,8 +14,11 @@ if [ ! -f host_vars/$hostname.yml ]; then
 wireguard_ip: $wireguard_ip
 wireguard_private_key: $private_key
 wireguard_public_key: $public_key
-wireguard_endpoint: $wireguard_endpoint_ip:51820
 EOF
+
+  if [ ! -z "$wireguard_endpoint_ip" ]; then
+    echo "wireguard_endpoint: $wireguard_endpoint_ip:51820" >> host_vars/$hostname.yml
+  fi
 fi
 
 if [ ! -f $hostname.yml ]; then

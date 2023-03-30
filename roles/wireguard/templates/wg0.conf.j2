@@ -20,5 +20,7 @@ AllowedIPs = 0.0.0.0/0
 AllowedIPs = {{ hostvars[host].wireguard_ip + '/32' }}
 {% endif %}
 PersistentKeepalive = 23
+{% if hostvars[host].wireguard_endpoint is defined %}
 Endpoint = {{ hostvars[host].wireguard_endpoint }}
+{% endif %}
 {% endfor %}
