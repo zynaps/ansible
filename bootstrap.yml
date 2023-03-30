@@ -4,39 +4,6 @@
   user: root
 
   pre_tasks:
-    - name: check if system was cloned
-      set_fact:
-        system_cloned: yes
-      when: ansible_hostname != inventory_hostname_short
-
-    - block:
-      - name: set new hostname
-        hostname:
-          name: "{{ inventory_hostname_short }}"
-
-      - name: edit /etc/hosts file
-        replace:
-          path: /etc/hosts
-          regexp: "{{ ansible_hostname }}"
-          replace: "{{ inventory_hostname_short }}"
-
-      - name: list current sshd keys
-        find:
-          paths: /etc/ssh
-          patterns: ssh_host_*_key*
-        register: sshd_keys
-
-      - name: delete current sshd keys
-        file:
-          path: "{{ item }}"
-          state: absent
-        loop: "{{ sshd_keys.files|map(attribute='path')|sort }}"
-
-      - name: regenerate sshd keys
-        command: ssh-keygen -A
-        changed_when: yes
-      when: system_cloned is sameas true
-
     - name: disable ipv6
       sysctl:
         name: net.ipv6.conf.all.disable_ipv6
