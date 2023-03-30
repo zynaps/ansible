@@ -1,0 +1,15 @@
+---
+- name: apply sshd system-wide settings
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^#?\\s*{{ item.key }}\\s+"
+    line: "{{ item.key }} {{ item.value }}"
+  loop:
+    - { key: 'AddressFamily', value: 'inet' }
+    - { key: 'ClientAliveInterval', value: '16' }
+    - { key: 'ClientAliveCountMax', value: '16' }
+    - { key: 'TCPKeepAlive', value: 'no' }
+    - { key: 'PasswordAuthentication', value: 'no' }
+  notify: reload sshd
+
+- meta: flush_handlers

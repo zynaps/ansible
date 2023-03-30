@@ -3,43 +3,16 @@
   hosts: all
   user: root
 
-  pre_tasks:
-    - name: disable ipv6
-      sysctl:
-        name: net.ipv6.conf.all.disable_ipv6
-        value: '1'
-        sysctl_file: /etc/sysctl.d/90-disable_ipv6.conf
-        sysctl_set: yes
-
-    - name: apply sshd system-wide settings
-      lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: "^#?\\s*{{ item.key }}\\s+"
-        line: "{{ item.key }} {{ item.value }}"
-      loop:
-        - { key: 'AddressFamily', value: 'inet' }
-        - { key: 'ClientAliveInterval', value: '16' }
-        - { key: 'ClientAliveCountMax', value: '16' }
-        - { key: 'TCPKeepAlive', value: 'no' }
-        - { key: 'PasswordAuthentication', value: 'no' }
-      notify: reload sshd
-
-    - meta: flush_handlers
-
   roles:
     - users
-
-  handlers:
-    - name: reload sshd
-      systemd:
-        name: ssh
-        state: reloaded
 
 - name: common hosts roles
   hosts: all
   become: yes
 
   roles:
+    - disable_ipv6
+    - sshd_tweak
     - common_packages
     - vnstat
     - wireguard
