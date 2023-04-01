@@ -1,0 +1,10 @@
+---
+- name: install
+  apt:
+    deb: https://downloads.rclone.org/rclone-current-linux-{{ ansible_architecture_mapped }}.deb
+
+- name: add config
+  template:
+    dest: /etc/rclone.conf
+    src: templates/rclone.conf.j2
+    mode: 0600
