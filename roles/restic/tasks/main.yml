@@ -1,0 +1,51 @@
+---
+- name: get current version info
+  command: restic version
+  register: restic_current_info
+  changed_when: no
+  failed_when: no
+
+- name: is not installed
+  set_fact:
+    restic_current: '0.0'
+  when: restic_current_info.rc == 2
+
+- name: extract current version
+  set_fact:
+    restic_current: "{{ restic_current_info.stdout|regex_search('restic ([\\d\\.]+) compiled', '\\1')|first }}"
+  when: restic_current_info.rc == 0
+
+- name: get latest version info
+  uri:
+    url: https://api.github.com/repos/restic/restic/releases/latest
+  register: restic_latest_info
+  changed_when: no
+  failed_when: no
+
+- name: extract latest version
+  set_fact:
+    restic_latest: "{{ restic_latest_info.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1')|first }}"
+
+- block:
+  - name: download
+    get_url:
+      url: "https://github.com/restic/restic/releases/download/v{{ restic_latest }}/restic_{{ restic_latest }}_linux_{{ ansible_architecture_mapped }}.bz2"
+      dest: /tmp
+
+  - name: uncompress
+    command: "bzip2 -d /tmp/restic_{{ restic_latest }}_linux_{{ ansible_architecture_mapped }}.bz2"
+    args:
+      creates: "/tmp/restic_{{ restic_latest }}_linux_{{ ansible_architecture_mapped }}"
+
+  - name: install
+    copy:
+      src: "/tmp/restic_{{ restic_latest }}_linux_{{ ansible_architecture_mapped }}"
+      dest: /usr/bin/restic
+      mode: 0755
+      remote_src: true
+
+  - name: remove temporary file
+    file:
+      path: "/tmp/restic_{{ restic_latest }}_linux_{{ ansible_architecture_mapped }}"
+      state: absent
+  when: restic_latest is version(restic_current, 'gt')
