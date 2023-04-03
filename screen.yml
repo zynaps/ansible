@@ -1,6 +1,4 @@
 ---
-- import_playbook: bootstrap.yml
-
 - name: screen setup
   hosts: screen
   become: yes

@@ -1,6 +1,4 @@
 ---
-- import_playbook: bootstrap.yml
-
 - name: kungfu setup
   hosts: kungfu
   become: yes

@@ -1,6 +1,4 @@
 ---
-- import_playbook: bootstrap.yml
-
 - name: darwin setup
   hosts: darwin
   become: yes
