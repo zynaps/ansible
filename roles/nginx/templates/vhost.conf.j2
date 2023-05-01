@@ -1,0 +1,24 @@
+#jinja2: lstrip_blocks: True, trim_blocks: True
+
+server {
+    server_name {{ item.domain }};
+
+    root /sites/{{ item.domain }}/data;
+
+    include conf.d/drops.conf;
+
+    {% if item.gzip is sameas true %}
+    include conf.d/gzip.conf;
+    {% endif -%}
+
+    {% if item.own_log is sameas true %}
+    error_log /sites/{{ item.domain }}/log/error.log info;
+    access_log /sites/{{ item.domain }}/log/access.log custom;
+    {% endif %}
+
+    location / {
+        {% if item.auto_index is sameas true %}
+        autoindex on;
+        {% endif %}
+    }
+}

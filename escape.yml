@@ -12,3 +12,4 @@
     - rutor_watch
     - feeder
     - traefik
+    - nginx
