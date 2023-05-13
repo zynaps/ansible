@@ -1,13 +1,6 @@
 ---
 - name: bootstrap host
   hosts: all
-  user: root
-
-  roles:
-    - users
-
-- name: common hosts roles
-  hosts: all
   become: yes
 
   roles:
@@ -18,3 +11,4 @@
     - wireguard
     - docker
     - docker_registry
+    - users
