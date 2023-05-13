@@ -4,6 +4,7 @@
   become: yes
 
   roles:
+    - apt_update
     - node_exporter
     - alertmanager
     - prometheus

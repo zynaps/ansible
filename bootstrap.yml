@@ -4,6 +4,7 @@
   become: yes
 
   roles:
+    - apt_update
     - disable_ipv6
     - sshd_tweak
     - common_packages

@@ -1,0 +1,4 @@
+---
+- name: update list of available packages
+  apt:
+    update_cache: yes

@@ -29,5 +29,6 @@ if [ ! -f $hostname.yml ]; then
   become: yes
 
   roles:
+    - apt_update
 EOF
 fi
