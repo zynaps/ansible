@@ -3,14 +3,10 @@
   apt:
     name:
       - curl
-      - fping
-      - fswatch
       - git
       - htop
-      - iperf3
       - iptables
       - jq
-      - ncat
       - nmap
       - python3-pip
       - rclone
@@ -20,8 +16,6 @@
       - sudo
       - tcpdump
       - tmux
-      - tree
-      - tshark
       - vim
       - whois
       - zsh
