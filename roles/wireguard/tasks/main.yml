@@ -1,10 +1,5 @@
 ---
-- name: install kernel modules
-  apt:
-    name: wireguard
-  when: ansible_kernel is version('5.6', '<')
-
-- name: install tools
+- name: install
   apt:
     name: wireguard-tools
 
