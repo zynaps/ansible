@@ -1,12 +1,4 @@
 ---
-- name: install sudo and popular shells
-  apt:
-    name:
-      - sudo
-      - tcsh
-      - zsh
-      - fish
-
 - name: passwordless sudo for sudo group
   copy:
     dest: /etc/sudoers.d/99-sudo-nopasswd
@@ -16,7 +8,6 @@
 - name: add or delete
   user:
     name: "{{ item.name }}"
-    comment: "{{ item.comment }}"
     uid: "{{ item.uid }}"
     groups: "{{ item.groups|default('') }}"
     shell: "{{ item.shell|default('/bin/bash') }}"

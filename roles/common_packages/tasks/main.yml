@@ -17,9 +17,11 @@
       - restic
       - rsync
       - socat
+      - sudo
       - tcpdump
       - tmux
       - tree
       - tshark
       - vim
       - whois
+      - zsh
