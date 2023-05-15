@@ -1,5 +1,5 @@
 ---
-- name: install prerequisites
+- name: add install prerequisites
   apt:
     name:
       - apt-transport-https
@@ -14,14 +14,17 @@
   apt_repository:
     repo: deb [arch={{ ansible_architecture_mapped }}] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
 
-- name: install docker-ce
+- name: install
   apt:
-    name: docker-ce
+    name:
+      - docker-ce
+      - docker-ce-rootless-extras
+      - docker-compose-plugin
 
 - name: add runtime prerequisites
   pip:
     name:
-      'docker'
+      - docker
 
 - name: add config
   template:
