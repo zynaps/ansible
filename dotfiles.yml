@@ -28,7 +28,7 @@
 
     - name: extract starship current version
       set_fact:
-        starship_current: "{{ starship_current_info.stdout|regex_search('starship ([\\d\\.]+)', '\\1')|first }}"
+        starship_current: "{{ starship_current_info.stdout | regex_search('starship ([\\d\\.]+)', '\\1') | first }}"
       when: starship_current_info.rc == 0
 
     - name: get starship latest version info
@@ -40,7 +40,7 @@
 
     - name: extract starship latest version
       set_fact:
-        starship_latest: "{{ starship_latest_info.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1')|first }}"
+        starship_latest: "{{ starship_latest_info.json.tag_name | regex_search('^v([\\d\\.]+)$', '\\1') | first }}"
 
     - name: install starship
       become: yes
@@ -63,7 +63,7 @@
 
     - name: extract chezmoi current version
       set_fact:
-        chezmoi_current: "{{ chezmoi_current_info.stdout|regex_search('version v([\\d\\.]+),', '\\1')|first }}"
+        chezmoi_current: "{{ chezmoi_current_info.stdout | regex_search('version v([\\d\\.]+),', '\\1') | first }}"
       when: chezmoi_current_info.rc == 0
 
     - name: get chezmoi latest version info
@@ -75,7 +75,7 @@
 
     - name: extract chezmoi latest version
       set_fact:
-        chezmoi_latest: "{{ chezmoi_latest_info.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1')|first }}"
+        chezmoi_latest: "{{ chezmoi_latest_info.json.tag_name | regex_search('^v([\\d\\.]+)$', '\\1') | first }}"
 
     - name: install chezmoi
       become: yes

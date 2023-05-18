@@ -16,5 +16,5 @@
     - name: install VMware guest agent
       apt:
         name: open-vm-tools
-    when: ansible_virtualization_type|lower == 'vmware'
+    when: ansible_virtualization_type | lower == 'vmware'
   when: ansible_virtualization_role == 'guest'

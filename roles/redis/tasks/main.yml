@@ -3,7 +3,7 @@
   sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"
-    sysctl_file: "{{ '/etc/sysctl.d/90-' + item.key|split('.')|last + '.conf' }}"
+    sysctl_file: "{{ '/etc/sysctl.d/90-' + item.key | split('.') | last + '.conf' }}"
     sysctl_set: yes
   loop:
     - { key: 'vm.overcommit_memory', value: '1' }

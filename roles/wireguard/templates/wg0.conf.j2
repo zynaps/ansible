@@ -10,7 +10,7 @@ PostDown = iptables -D FORWARD -o %i -j ACCEPT
 PostDown = iptables -D FORWARD -i %i -j ACCEPT
 {% endif %}
 ListenPort = 51820
-{% for host in groups.wireguard|reject('==', inventory_hostname) %}
+{% for host in groups.wireguard | reject('==', inventory_hostname) %}
 
 [Peer] # {{ host }}
 PublicKey = {{ hostvars[host].wireguard_public_key }}

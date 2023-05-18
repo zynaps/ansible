@@ -9,8 +9,8 @@
   user:
     name: "{{ item.name }}"
     uid: "{{ item.uid }}"
-    groups: "{{ item.groups|default('') }}"
-    shell: "{{ item.shell|default('/bin/bash') }}"
+    groups: "{{ item.groups | default('') }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
     state: "{{ item.state }}"
     remove: yes
   with_items:

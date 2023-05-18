@@ -12,7 +12,7 @@
 
 - name: extract current version
   set_fact:
-    restic_current: "{{ restic_current_info.stdout|regex_search('restic ([\\d\\.]+) compiled', '\\1')|first }}"
+    restic_current: "{{ restic_current_info.stdout | regex_search('restic ([\\d\\.]+) compiled', '\\1') | first }}"
   when: restic_current_info.rc == 0
 
 - name: get latest version info
@@ -24,7 +24,7 @@
 
 - name: extract latest version
   set_fact:
-    restic_latest: "{{ restic_latest_info.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1')|first }}"
+    restic_latest: "{{ restic_latest_info.json.tag_name | regex_search('^v([\\d\\.]+)$', '\\1') | first }}"
 
 - block:
   - name: download

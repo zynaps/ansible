@@ -22,25 +22,25 @@
 
 - name: extract current and latest versions
   set_fact:
-    node_exporter_latest: "{{ node_exporter_latest.json.tag_name|regex_search('^v([\\d\\.]+)$', '\\1') }}"
-    node_exporter_current: "{{ node_exporter_current.stdout|regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') }}"
+    node_exporter_latest: "{{ node_exporter_latest.json.tag_name | regex_search('^v([\\d\\.]+)$', '\\1') }}"
+    node_exporter_current: "{{ node_exporter_current.stdout | regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') }}"
 
 - name: is not installed
   set_fact:
     node_exporter_current: ['0']
-  when: node_exporter_current|length == 0
+  when: node_exporter_current | length == 0
 
 - block:
   - name: download and extract
     unarchive:
-      src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest|first }}/node_exporter-{{ node_exporter_latest|first }}.linux-{{ ansible_architecture_mapped }}.tar.gz
+      src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest | first }}/node_exporter-{{ node_exporter_latest | first }}.linux-{{ ansible_architecture_mapped }}.tar.gz
       dest: /tmp
       mode: 0755
       remote_src: true
 
   - name: install binary
     copy:
-      src: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-{{ ansible_architecture_mapped }}/node_exporter
+      src: /tmp/node_exporter-{{ node_exporter_latest | first }}.linux-{{ ansible_architecture_mapped }}/node_exporter
       dest: /usr/bin
       mode: 0755
       remote_src: true
@@ -48,7 +48,7 @@
 
   - name: remove temporary directory
     file:
-      path: /tmp/node_exporter-{{ node_exporter_latest|first }}.linux-{{ ansible_architecture_mapped }}
+      path: /tmp/node_exporter-{{ node_exporter_latest | first }}.linux-{{ ansible_architecture_mapped }}
       state: absent
   when: node_exporter_latest is version(node_exporter_current, 'gt')
 
