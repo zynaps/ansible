@@ -9,7 +9,7 @@ tasks:
   host:bootstrap:
     desc: bootstrap the host and setup common roles
     cmds:
-      - ansible-playbook bootstrap.yml --limit={{.CLI_ARGS}}
+      - ansible-playbook bootstrap.yml --limit {{.CLI_ARGS}}
 
   host:setup:
     desc: setup declared roles in host playbook
