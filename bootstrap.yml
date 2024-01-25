@@ -1,7 +1,7 @@
 ---
 - name: bootstrap host
   hosts: all
-  become: yes
+  user: root
 
   roles:
     - apt_update
