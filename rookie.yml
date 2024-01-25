@@ -1,0 +1,7 @@
+---
+- name: rookie setup
+  hosts: rookie
+  become: yes
+
+  roles:
+    - apt_update
