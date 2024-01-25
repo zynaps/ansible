@@ -21,6 +21,7 @@
     image: redis:alpine
     command: redis-server --appendonly yes
     restart_policy: unless-stopped
+    user: root
     ports:
       - "{{ wireguard_ip + ':6379:6379/tcp' }}"
     volumes:
