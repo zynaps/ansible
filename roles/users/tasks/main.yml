@@ -13,8 +13,7 @@
     shell: "{{ item.shell | default('/bin/bash') }}"
     state: "{{ item.state }}"
     remove: yes
-  with_items:
-    - "{{ users }}"
+  loop: "{{ users }}"
 
 - name: add authorized_keys
   authorized_key:
@@ -22,5 +21,4 @@
     key: "{{ item.authorized_key }}"
     state: present
   when: item.state == 'present' and item.authorized_key is defined
-  with_items:
-    - "{{ users }}"
+  loop: "{{ users }}"
