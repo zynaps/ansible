@@ -18,7 +18,6 @@
   apt:
     name:
       - docker-ce
-      - docker-ce-rootless-extras
       - docker-compose-plugin
       - python3-docker
 
