@@ -3,6 +3,7 @@
   apt:
     name:
       - curl
+      - direnv
       - git
       - htop
       - iptables
