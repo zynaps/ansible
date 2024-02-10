@@ -2,3 +2,12 @@
 - name: update list of available packages
   apt:
     update_cache: yes
+
+- name: gathering list of upgradable packages
+  command: apt list --upgradeable
+  register: apt_upgradable_packages
+  changed_when: no
+
+- name: show packages to be upgraded
+  debug:
+    var: apt_upgradable_packages.stdout
