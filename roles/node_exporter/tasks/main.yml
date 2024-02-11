@@ -10,52 +10,62 @@
 
 - name: get current version info
   command: node_exporter --version
-  register: node_exporter_current
+  register: node_exporter_current_info
   changed_when: no
   failed_when: no
+
+- name: is not installed
+  set_fact:
+    node_exporter_current: "0.0"
+  when: node_exporter_current_info.rc == 2
+
+- name: extract current version
+  set_fact:
+    node_exporter_current: "{{ node_exporter_current_info.stdout | regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') | first }}"
+  when: node_exporter_current_info.rc == 0
 
 - name: get latest version info
   uri:
     url: https://api.github.com/repos/prometheus/node_exporter/releases/latest
-  register: node_exporter_latest
+  register: node_exporter_latest_info
+  changed_when: no
   failed_when: no
 
-- name: extract current and latest versions
+- name: extract latest version
   set_fact:
-    node_exporter_latest: "{{ node_exporter_latest.json.tag_name | regex_search('^v([\\d\\.]+)$', '\\1') }}"
-    node_exporter_current: "{{ node_exporter_current.stdout | regex_search('^node_exporter, version ([\\d\\.]+)', '\\1') }}"
-
-- name: is not installed
-  set_fact:
-    node_exporter_current: ['0']
-  when: node_exporter_current | length == 0
+    node_exporter_latest: "{{ node_exporter_latest_info.json.tag_name | regex_search('^v([\\d\\.]+)$', '\\1') | first }}"
 
 - block:
-  - name: download and extract
+  - name: create temporary directory
+    tempfile:
+      state: directory
+    register: node_exporter_tmpdir
+
+  - name: download and extract asset
     unarchive:
-      src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest | first }}/node_exporter-{{ node_exporter_latest | first }}.linux-{{ ansible_architecture_mapped }}.tar.gz
-      dest: /tmp
-      mode: 0755
+      dest: "{{ node_exporter_tmpdir.path }}"
+      src: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_latest }}/node_exporter-{{ node_exporter_latest }}.linux-{{ ansible_architecture_mapped }}.tar.gz"
       remote_src: true
 
-  - name: install binary
+  - name: install executable only
     copy:
-      src: /tmp/node_exporter-{{ node_exporter_latest | first }}.linux-{{ ansible_architecture_mapped }}/node_exporter
-      dest: /usr/bin
+      dest: "/usr/bin"
+      src: "{{ node_exporter_tmpdir.path }}/node_exporter-{{ node_exporter_latest }}.linux-{{ ansible_architecture_mapped }}/node_exporter"
       mode: 0755
       remote_src: true
     notify: restart node_exporter
 
   - name: remove temporary directory
     file:
-      path: /tmp/node_exporter-{{ node_exporter_latest | first }}.linux-{{ ansible_architecture_mapped }}
+      path: "{{ node_exporter_tmpdir.path }}"
       state: absent
+    when: node_exporter_tmpdir.path is defined
   when: node_exporter_latest is version(node_exporter_current, 'gt')
 
 - name: systemd unit file
   template:
-    src: node_exporter.service.j2
-    dest: /etc/systemd/system/node_exporter.service
+    dest: "/etc/systemd/system/node_exporter.service"
+    src: "node_exporter.service.j2"
     mode: 0644
   notify: restart node_exporter
 
