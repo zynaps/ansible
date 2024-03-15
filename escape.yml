@@ -5,6 +5,8 @@
 
   roles:
     - apt_update
+    - docker
+    - docker_registry
     - node_exporter
     - alertmanager
     - prometheus
