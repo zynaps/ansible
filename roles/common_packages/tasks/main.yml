@@ -8,6 +8,7 @@
       - htop
       - iptables
       - jq
+      - netcat-openbsd
       - nmap
       - python3-pip
       - rclone
