@@ -2,9 +2,11 @@
 - name: install
   apt:
     name:
+      - atop
       - curl
       - direnv
       - git
+      - gpg
       - htop
       - iptables
       - jq
