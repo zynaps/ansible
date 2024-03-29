@@ -1,0 +1,5 @@
+---
+- name: backports version
+  apt:
+    name: golang
+    default_release: "{{ ansible_distribution_release }}-backports"
