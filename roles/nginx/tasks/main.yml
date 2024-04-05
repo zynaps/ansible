@@ -21,12 +21,6 @@
     state: directory
   loop: "{{ sites }}"
 
-- name: create sites logs directories
-  file:
-    path: "{{ '/srv/sites/' + item.domain  + '/log' }}"
-    state: directory
-  loop: "{{ sites }}"
-
 - name: create sites config directory
   file:
     path: /srv/nginx/sites.d

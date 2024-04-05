@@ -3,4 +3,3 @@ sites:
   - domain: zynaps.ru
     auto_index: yes
     gzip: yes
-    own_log: no

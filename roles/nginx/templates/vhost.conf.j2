@@ -11,11 +11,6 @@ server {
     include conf.d/gzip.conf;
     {% endif -%}
 
-    {% if item.own_log is sameas true %}
-    error_log /sites/{{ item.domain }}/log/error.log info;
-    access_log /sites/{{ item.domain }}/log/access.log custom;
-    {% endif %}
-
     location / {
         {% if item.auto_index is sameas true %}
         autoindex on;
