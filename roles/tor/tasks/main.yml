@@ -1,0 +1,8 @@
+---
+- name: start container
+  docker_container:
+    name: tor
+    image: leplusorg/tor
+    restart_policy: unless-stopped
+    ports:
+      - "{{ wireguard_ip + ':9050:9050/tcp' }}"
