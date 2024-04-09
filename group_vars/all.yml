@@ -6,6 +6,8 @@ ansible_architecture_map:
 
 ansible_architecture_mapped: "{{ ansible_architecture_map[ansible_architecture] }}"
 
+docker_registry: "127.0.0.1:5000"
+
 users:
   - name: igor
     uid: 1000
