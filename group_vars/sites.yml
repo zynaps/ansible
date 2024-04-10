@@ -1,0 +1,7 @@
+---
+sites:
+  - name: front
+    hostnames:
+      - zynaps.ru
+    gzip: yes
+    autoindex: yes

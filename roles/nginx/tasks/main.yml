@@ -15,24 +15,6 @@
     force_source: yes
     state: present
 
-- name: create sites data directories
-  file:
-    path: "{{ '/srv/sites/' + item.domain + '/data' }}"
-    state: directory
-  loop: "{{ sites }}"
-
-- name: create sites config directory
-  file:
-    path: /srv/nginx/sites.d
-    state: directory
-
-- name: generate vhosts configs
-  template:
-    dest: "/srv/nginx/sites.d/{{ item.domain }}.conf"
-    src: templates/vhost.conf.j2
-  loop: "{{ sites }}"
-  notify: reload nginx
-
 - name: start container
   docker_container:
     name: nginx
@@ -40,11 +22,8 @@
     restart_policy: unless-stopped
     labels:
       traefik.enable=true
-      traefik.http.routers.sites.rule=Host(`{{ sites | map(attribute='domain') | join('`,`') }}`)
+      traefik.http.routers.sites.rule=Host(`zynaps.ru`)
       traefik.http.routers.sites.tls=true
       traefik.http.routers.sites.tls.certresolver=letsencrypt
     volumes:
-      - "/srv/nginx/sites.d:/etc/nginx/sites.d"
       - "/srv/sites:/sites"
-
-- meta: flush_handlers

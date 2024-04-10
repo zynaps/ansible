@@ -1,0 +1,19 @@
+---
+- name: create files directory
+  file:
+    path: "{{ '/srv/sites/' + item.name + '/files' }}"
+    state: directory
+  loop: "{{ sites }}"
+
+- name: create configs directory
+  file:
+    path: "{{ '/srv/sites/' + item.name + '/etc' }}"
+    state: directory
+  loop: "{{ sites }}"
+
+- name: generate configs
+  template:
+    dest: "/srv/sites/{{ item.name }}/etc/nginx.conf"
+    src: templates/nginx.conf.j2
+  loop: "{{ sites }}"
+  notify: reload nginx

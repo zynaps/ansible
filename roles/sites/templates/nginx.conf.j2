@@ -1,0 +1,18 @@
+#jinja2: lstrip_blocks: True, trim_blocks: True
+
+server {
+    server_name {{ item.hostnames | join(', ') }};
+
+    root /sites/{{ item.name }}/files;
+
+    {% if item.gzip is sameas true %}
+    gzip on;
+    gzip_vary on;
+    {% endif %}
+
+    location / {
+        {% if item.autoindex is sameas true %}
+        autoindex on;
+        {% endif %}
+    }
+}
