@@ -13,7 +13,6 @@
       - netcat-openbsd
       - nmap
       - python3-pip
-      - rclone
       - restic
       - rsync
       - socat
