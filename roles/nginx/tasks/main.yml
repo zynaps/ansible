@@ -15,15 +15,39 @@
     force_source: yes
     state: present
 
+- name: create complementary nginx directory
+  file:
+    path: "/srv/nginx/etc/conf.d"
+    state: directory
+
+- name: create sites directories
+  file:
+    path: "/srv/sites/{{ item.0.name }}/{{ item.1 }}"
+    state: directory
+  loop: "{{ sites | product(['etc', 'files']) | list }}"
+
+- name: generate sites configs
+  template:
+    dest: "/srv/sites/{{ item.name }}/etc/nginx.conf"
+    src: templates/nginx.conf.j2
+  loop: "{{ sites }}"
+  notify: reload nginx
+
+- name: include sites configs
+  copy:
+    dest: /srv/nginx/etc/conf.d/sites.conf
+    content: "include /srv/sites/*/etc/nginx.conf;\n"
+  notify: reload nginx
+
 - name: start container
   docker_container:
     name: nginx
     image: "{{ docker_registry + '/' + 'nginx' }}"
     restart_policy: unless-stopped
-    labels:
-      traefik.enable=true
-      traefik.http.routers.sites.rule=Host(`zynaps.ru`)
-      traefik.http.routers.sites.tls=true
-      traefik.http.routers.sites.tls.certresolver=letsencrypt
+    ports:
+      - "80:80/tcp"
     volumes:
-      - "/srv/sites:/sites"
+      - "/srv/nginx/etc/conf.d:/etc/nginx/conf.d"
+      - "/srv/sites:/srv/sites"
+
+- meta: flush_handlers

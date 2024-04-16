@@ -1,0 +1,5 @@
+server {
+    server_name {{ item.hostnames | join(' ') }};
+
+    root /srv/sites/{{ item.name }}/files;
+}
