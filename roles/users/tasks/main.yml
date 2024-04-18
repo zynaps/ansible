@@ -10,7 +10,7 @@
     name: "{{ item.name }}"
     uid: "{{ item.uid }}"
     groups: "{{ item.groups | default('') }}"
-    shell: "{{ item.shell | default('/bin/bash') }}"
+    shell: "{{ item.shell | default('/bin/sh') }}"
     state: "{{ item.state }}"
     remove: yes
   loop: "{{ users }}"
