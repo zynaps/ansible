@@ -29,7 +29,7 @@
 - name: generate sites configs
   template:
     dest: "/srv/sites/{{ item.name }}/etc/nginx.conf"
-    src: templates/nginx.conf.j2
+    src: templates/{{ item.template }}.conf.j2
   loop: "{{ sites }}"
   notify: reload nginx
 

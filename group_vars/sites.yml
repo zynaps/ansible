@@ -4,3 +4,4 @@ sites:
     hostnames:
       - zynaps.ru
       - www.zynaps.ru
+    template: plain
