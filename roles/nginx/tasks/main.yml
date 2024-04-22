@@ -46,6 +46,7 @@
     restart_policy: unless-stopped
     ports:
       - "80:80/tcp"
+      - "443:443/tcp"
     volumes:
       - "/srv/nginx/etc/conf.d:/etc/nginx/conf.d"
       - "/srv/sites:/srv/sites"

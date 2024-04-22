@@ -1,5 +1,18 @@
 server {
+    listen *:80;
+
     server_name {{ item.hostnames | join(' ') }};
+
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen *:443 ssl;
+
+    server_name {{ item.hostnames | join(' ') }};
+
+    ssl_certificate /srv/letsencrypt/etc/live/zynaps.ru/fullchain.pem;
+    ssl_certificate_key /srv/letsencrypt/etc/live/zynaps.ru/privkey.pem;
 
     root /srv/sites/{{ item.name }}/files;
 }
