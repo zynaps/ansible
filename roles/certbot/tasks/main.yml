@@ -1,0 +1,40 @@
+---
+- name: check for certificate
+  stat:
+    path: "/srv/letsencrypt/etc/live/zynaps.ru/"
+  register: certificate_status
+
+- block:
+  - name: create directories
+    file:
+      path: "{{ '/srv/letsencrypt/' + item }}"
+      state: directory
+    loop:
+      - etc
+      - log
+
+  - name: add cloudflare credentials
+    copy:
+      dest: /srv/letsencrypt/etc/cloudflare-credentials
+      content: "dns_cloudflare_api_token = {{ lookup('env', 'CF_API_TOKEN') }}\n"
+      mode: 0400
+
+  - name: issue certificate
+    docker_container:
+      name: certbot
+      image: certbot/dns-cloudflare:latest
+      command: >-
+          certonly
+            --non-interactive
+            --agree-tos
+            --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare-credentials
+            --email zynaps@zynaps.ru
+            --domain zynaps.ru --domain *.zynaps.ru
+            --max-log-backups 3
+      volumes:
+        - "/srv/letsencrypt/etc:/etc/letsencrypt"
+        - "/srv/letsencrypt/log:/var/log/letsencrypt"
+  when: not certificate_status.stat.exists
+  notify: reload nginx
+
+- meta: flush_handlers

@@ -16,4 +16,5 @@
     - rutor_watch
     - feeder
     - traefik
+    - certbot
     - nginx
